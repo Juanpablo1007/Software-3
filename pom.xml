@@ -18,6 +18,7 @@
         aplicativo</description>
     <modules>
         <module>Persistencia</module>
+        <module>Front</module>
     </modules>
     <properties>
         <java.version>11</java.version>
