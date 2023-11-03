@@ -34,8 +34,9 @@ public class Empleado implements Serializable {
 
     @Column(length = 20)
     private String contrasenia;
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Tipo_Documento tipoDocumento;
-    @OneToMany(mappedBy="Empleado")
-    private List<Factura> factura;
+    @OneToMany(mappedBy="empleado")
+    private List<Factura> facturas;
 }

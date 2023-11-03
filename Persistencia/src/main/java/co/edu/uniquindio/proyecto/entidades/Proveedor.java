@@ -29,6 +29,7 @@ public class Proveedor implements Serializable{
     @Column(nullable = false, length = 255)
     private String telefono;
 
+    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Tipo_Documento tipoDocumento;
     @OneToMany(mappedBy="proveedor")

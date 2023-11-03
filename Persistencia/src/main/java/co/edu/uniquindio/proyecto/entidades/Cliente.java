@@ -31,8 +31,9 @@ public class Cliente implements Serializable{
     private String correo;
     @Column(length = 20)
     private String telefono;
-    @Enumerated (EnumType.STRING)
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private Tipo_Documento tipoDocumento;
-    @OneToMany(mappedBy="Cliente")
-    private List<Factura> factura;
+    @OneToMany(mappedBy="cliente")
+    private List<Factura> facturas;
 }

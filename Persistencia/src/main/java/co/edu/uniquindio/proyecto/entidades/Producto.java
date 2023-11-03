@@ -28,19 +28,15 @@ public class Producto  implements Serializable{
     @Column(nullable = false)
     private int stock;
 
-
     @Column(nullable = false)
-
+    @Enumerated(EnumType.STRING)
     private Categoria categoria;
-
-
-
 
     @ManyToOne
     @JoinColumn(nullable = false)
     private Proveedor proveedor;
     @OneToMany(mappedBy="producto")
-    private List<detalle_Factura> detalleFacturas;
+    private List<Detalle_Factura> facturas;
 
 }
 

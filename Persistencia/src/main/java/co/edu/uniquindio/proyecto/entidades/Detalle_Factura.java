@@ -1,9 +1,8 @@
 package co.edu.uniquindio.proyecto.entidades;
-import lombok.*;
 import javax.persistence.*;
+import lombok.*;
+
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
 
 @Entity
 @Getter
@@ -12,34 +11,25 @@ import java.util.List;
 @AllArgsConstructor
 @ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Factura implements Serializable {
-
+public class Detalle_Factura implements Serializable{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, length = 50)
     @EqualsAndHashCode.Include
     private int codigo;
-    @Column(nullable = false)
-    private Date fecha;
 
-    @Column(nullable = false,length = 10)
-    private double valor_total;
+    @Column(nullable = false, length = 50)
+    private int cantidad;
+
+    @Column(nullable = false, length = 50)
+    private double precio_unidad;
+    @ManyToOne
+    @JoinColumn(nullable = false)
+    private Factura factura;
 
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Cliente cliente;
-
-    @ManyToOne
-    @JoinColumn(nullable = false)
-    private Empleado empleado;
-
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private Tipo_Factura tipoFactura;
-
-    @OneToMany(mappedBy = "factura" )
-    private List<Detalle_Factura> productos;
-
-
+    private Producto producto;
 }
+
