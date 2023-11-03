@@ -16,7 +16,7 @@ public class Proveedor implements Serializable{
 
     @Column(nullable = false, length = 255)
     @Id
-    private String id_proveedor;
+    private String documento;
     @Column(nullable = false, length = 255)
     private String nombre;
 
