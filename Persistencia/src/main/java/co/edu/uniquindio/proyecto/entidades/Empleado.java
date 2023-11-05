@@ -39,4 +39,15 @@ public class Empleado implements Serializable {
     private Tipo_Documento tipoDocumento;
     @OneToMany(mappedBy="empleado")
     private List<Factura> facturas;
+    public Empleado(String id_empleado, String nombre, String apellido, String direccion, String correo,
+                    String telefono, String contrasenia, Tipo_Documento tipoDocumento) {
+        this.id_empleado = id_empleado;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.direccion = direccion;
+        this.correo = correo;
+        this.telefono = telefono;
+        this.contrasenia = contrasenia;
+        this.tipoDocumento = tipoDocumento;
+    }
 }

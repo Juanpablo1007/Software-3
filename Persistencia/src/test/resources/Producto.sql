@@ -21,25 +21,21 @@ VALUES ('5', 'proveedor5@correo.com', 'Dirección 5', 'Proveedor 5', '999999999'
 
 
 -- Registros de Producto
--- Insertar el primer registro
-INSERT INTO Producto
-VALUES (1, 'Categoría 1', 'Producto 1', 100.0, 50.0, 10, '1');
+-- Insertar el primer registro con valor de enum
+INSERT INTO Producto VALUES (1, 'MAQUILLAJE', 'Producto 1', 100.0, 50.0, 10, '1');
 
--- Insertar el segundo registro
-INSERT INTO Producto
-VALUES (2, 'Categoría 2', 'Producto 2', 200.0, 100.0, 20, '2');
+-- Insertar el segundo registro con valor de enum
+INSERT INTO Producto VALUES (2, 'CUIDADO_CABELLO', 'Producto 2', 200.0, 100.0, 20, '2');
 
--- Insertar el tercer registro
-INSERT INTO Producto
-VALUES (3, 'Categoría 1', 'Producto 3', 150.0, 75.0, 15, '3');
+-- Insertar el tercer registro con valor de enum
+INSERT INTO Producto VALUES (3, 'MAQUILLAJE', 'Producto 3', 150.0, 75.0, 15, '3');
 
--- Insertar el cuarto registro
-INSERT INTO Producto
-VALUES (4, 'Categoría 3', 'Producto 4', 300.0, 150.0, 30, '4');
+-- Insertar el cuarto registro con valor de enum
+INSERT INTO Producto VALUES (4, 'CUIDADO_PIEL', 'Producto 4', 300.0, 150.0, 30, '4');
 
--- Insertar el quinto registro
-INSERT INTO Producto
-VALUES (5, 'Categoría 2', 'Producto 5', 250.0, 125.0, 25, '5');
+-- Insertar el quinto registro con valor de enum
+INSERT INTO Producto VALUES (5, 'CUIDADO_CABELLO', 'Producto 5', 250.0, 125.0, 25, '5');
+
 
 
 

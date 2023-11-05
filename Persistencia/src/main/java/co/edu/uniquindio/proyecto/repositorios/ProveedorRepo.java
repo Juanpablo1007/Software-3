@@ -14,10 +14,11 @@ import java.util.Optional;
 public interface ProveedorRepo extends JpaRepository <Proveedor, String>{
 
     List<Proveedor> findAll();
-    List <Proveedor> findAllByNombreContainsIgnoreCase(String nombre);
+    List <Proveedor> findAllByNombre(String nombre);
     Optional<Proveedor> findByDocumento(String Documento);
 
     Optional<Proveedor> findByCorreo(String Correo);
-
+    Optional<Proveedor> findByNombreAndDocumentoAndCorreo(String nombre,String Documento,String Correo);
+    List <Proveedor> findAllByTipoDocumento(Tipo_Documento tipoDocumento);
 
 }

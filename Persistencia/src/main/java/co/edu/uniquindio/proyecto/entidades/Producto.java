@@ -10,7 +10,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Producto  implements Serializable{
     @Id
@@ -18,7 +18,7 @@ public class Producto  implements Serializable{
     @Column(nullable = false, length = 50)
     @EqualsAndHashCode.Include
     private Integer codigo;
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false, length = 255,unique = true)
     private String nombre;
     @Column(nullable = false,length = 10)
     private Double precio_maximo;
@@ -49,5 +49,17 @@ public class Producto  implements Serializable{
 
 
     }
+    @Override
+    public String toString() {
+        return "Producto{" +
+                "codigo=" + codigo +
+                ", nombre='" + nombre + '\'' +
+                ", precio_maximo=" + precio_maximo +
+                ", precio_minimo=" + precio_minimo +
+                ", stock=" + stock +
+                ", categoria=" + categoria +
+                '}';
+    }
+
 }
 
