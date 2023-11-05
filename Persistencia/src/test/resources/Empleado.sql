@@ -1,6 +1,6 @@
 -- Registro 1
 INSERT INTO Empleado
-VALUES ('1', 'Apellido 1', 'password123', 'empleado1@correo.com', 'Dirección 1', 'Empleado 1', '123456789', 'CEDULA_CIUDADANIA');
+VALUES ('1', 'Apellido 1', 'password123', 'empleado1@correo.com', 'Dirección 1', 'Juan', '123456789', 'CEDULA_CIUDADANIA');
 
 -- Registro 2
 INSERT INTO Empleado
@@ -8,7 +8,7 @@ VALUES ('2', 'Apellido 2', 'secret456', 'empleado2@correo.com', 'Dirección 2', 
 
 -- Registro 3
 INSERT INTO Empleado
-VALUES ('3', 'Apellido 3', 'confidential789', 'empleado3@correo.com', 'Dirección 3', 'Empleado 3', '555555555', 'CEDULA_CIUDADANIA');
+VALUES ('3', 'Apellido 3', 'confidential789', 'empleado3@correo.com', 'Dirección 3', 'Juan', '555555555', 'CEDULA_CIUDADANIA');
 
 -- Registro 4
 INSERT INTO Empleado

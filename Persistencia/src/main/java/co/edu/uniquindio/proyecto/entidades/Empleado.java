@@ -17,7 +17,7 @@ public class Empleado implements Serializable {
 
     @Column(nullable = false, length = 255)
     @Id
-    private String id_empleado;
+    private String id;
     @Column(nullable = false, length = 255)
     private String nombre;
 
@@ -27,7 +27,7 @@ public class Empleado implements Serializable {
     @Column(nullable = false,length = 255)
     private String direccion;
 
-    @Column(nullable = false, length = 255)
+    @Column(nullable = false, length = 255, unique = true)
     private String correo;
     @Column(length = 20)
     private String telefono;
@@ -37,11 +37,11 @@ public class Empleado implements Serializable {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Tipo_Documento tipoDocumento;
-    @OneToMany(mappedBy="empleado")
+    @OneToMany(mappedBy="empleado", cascade = CascadeType.ALL)
     private List<Factura> facturas;
-    public Empleado(String id_empleado, String nombre, String apellido, String direccion, String correo,
+    public Empleado(String id, String nombre, String apellido, String direccion, String correo,
                     String telefono, String contrasenia, Tipo_Documento tipoDocumento) {
-        this.id_empleado = id_empleado;
+        this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.direccion = direccion;
