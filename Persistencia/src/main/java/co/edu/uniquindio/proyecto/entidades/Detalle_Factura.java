@@ -9,7 +9,6 @@ import java.io.Serializable;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Detalle_Factura implements Serializable{
 
@@ -17,7 +16,7 @@ public class Detalle_Factura implements Serializable{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, length = 50)
     @EqualsAndHashCode.Include
-    private int codigo;
+    private Integer codigo;
 
     @Column(nullable = false, length = 50)
     private int cantidad;
@@ -31,5 +30,21 @@ public class Detalle_Factura implements Serializable{
     @ManyToOne
     @JoinColumn(nullable = false)
     private Producto producto;
+    public Detalle_Factura(int cantidad, double precio_unidad, Factura factura, Producto producto) {
+        this.cantidad = cantidad;
+        this.precio_unidad = precio_unidad;
+        this.factura = factura;
+        this.producto = producto;
+    }
+    @Override
+    public String toString() {
+        return "Detalle_Factura{" +
+                "codigo=" + codigo +
+                ", cantidad=" + cantidad +
+                ", precio_unidad=" + precio_unidad +
+                ", factura=" + (factura != null ? factura.getCodigo() : null) +
+                ", producto=" + (producto != null ? producto.getCodigo() : null) +
+                '}';
+    }
 }
 

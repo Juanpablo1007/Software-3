@@ -19,7 +19,7 @@ public class Factura implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false, length = 50)
     @EqualsAndHashCode.Include
-    private int codigo;
+    private Integer codigo;
     @Column(nullable = false)
     private Date fecha;
 
@@ -38,8 +38,35 @@ public class Factura implements Serializable {
     @Enumerated(EnumType.STRING)
     private Tipo_Factura tipoFactura;
 
-    @OneToMany(mappedBy = "factura" )
+    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL)
     private List<Detalle_Factura> productos;
+    public Factura(Date fecha, double valor_total, Cliente cliente, Empleado empleado, Tipo_Factura tipoFactura, List<Detalle_Factura> productos) {
+        this.fecha = fecha;
+        this.valor_total = valor_total;
+        this.cliente = cliente;
+        this.empleado = empleado;
+        this.tipoFactura = tipoFactura;
+        this.productos = productos;
+    }
+
+    @Override
+    public String toString() {
+        return "Factura{" +
+                "codigo=" + codigo +
+                ", fecha=" + fecha +
+                ", valor_total=" + valor_total +
+                ", cliente=" + (cliente != null ? cliente.getNombre() : null) +
+                ", empleado=" + (empleado != null ? empleado.getNombre() : null) +
+                ", tipoFactura=" + tipoFactura +
+                ", productos=" + productos +
+                '}';
+    }
 
 
-}
+
+
+
+
+
+
+        }
