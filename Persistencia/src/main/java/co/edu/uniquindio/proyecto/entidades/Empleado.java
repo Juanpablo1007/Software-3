@@ -27,7 +27,7 @@ public class Empleado implements Serializable {
     @Column(nullable = false,length = 255)
     private String direccion;
 
-    @Column(nullable = false, length = 255, unique = true)
+    @Column(nullable = false, length = 255)
     private String correo;
     @Column(length = 20)
     private String telefono;

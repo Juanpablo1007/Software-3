@@ -18,8 +18,10 @@ public interface EmpleadoRepo extends  JpaRepository <Empleado, String>{
     Optional<Empleado> findByNombreAndIdAndCorreo(String nombre, String id ,String correo);
 
     List <Empleado> findAllByNombre(String nombre);
+    List <Empleado> findAllByNombreAndIdAndCorreo(String nombre,String id,String correo);
     Optional<Empleado> findByCorreo(String correo);
-
+    List <Empleado>  findAllByCorreo(String correo);
+    List <Empleado> findAllById(String id);
     List <Empleado> findAll();
 
 
