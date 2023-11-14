@@ -16,7 +16,7 @@
     <children>
         <ImageView fx:id="fondoImageView" fitHeight="630.0" fitWidth="1260.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="@Actualizar%20empleado.jpg" />
+                <Image url="@Actualizar empleado.jpg" />
             </image>
         </ImageView>
         <Label fx:id="inventarioLabel" layoutX="40.0" layoutY="126.0" prefHeight="20.0" prefWidth="90.0" />

@@ -1,25 +1,25 @@
 package co.edu.uniquindio.proyecto.Controllers;
 import co.edu.uniquindio.proyecto.entidades.Empleado;
+import co.edu.uniquindio.proyecto.entidades.Proveedor;
 import co.edu.uniquindio.proyecto.repositorios.EmpleadoRepo;
+import co.edu.uniquindio.proyecto.repositorios.ProveedorRepo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.swing.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 @Component
-public class EmpleadoController implements Initializable {
+public class ProveedorController implements Initializable {
     @Autowired
-    EmpleadoRepo empleadoRepo;
-    ObservableList<Empleado> listaPersonasObservable = FXCollections.observableArrayList();
+    ProveedorRepo proveedorRepo;
+    ObservableList<Proveedor> listaProveedoresObservable = FXCollections.observableArrayList();
     @FXML
     private Label inventarioLabel;
 
@@ -54,6 +54,9 @@ public class EmpleadoController implements Initializable {
     private Label eliminarLabel;
 
     @FXML
+    private Label CrearLabel;
+
+    @FXML
     private Label buscarLabel;
 
     @FXML
@@ -66,22 +69,25 @@ public class EmpleadoController implements Initializable {
     private TextField nombreField;
 
     @FXML
-    private TableView<Empleado> tablaEmpleados;
+    private TableView<Proveedor> tablaProveedor;
 
     @FXML
-    private TableColumn<Empleado, String> nombreColumn;
+    private TableColumn<Proveedor, String> nombreColumn;
 
     @FXML
-    private TableColumn<Empleado, String> direccionColumn;
+    private TableColumn<Proveedor, String> direccionColumn;
 
     @FXML
-    private TableColumn<Empleado, String> telefonoColumn;
+    private TableColumn<Proveedor, String> telefonoColumn;
 
     @FXML
-    private TableColumn<Empleado, String> cedulaColumn;
+    private TableColumn<Proveedor, String> cedulaColumn;
 
     @FXML
-    private TableColumn<Empleado, String> correoColumn;
+    private TableColumn<Proveedor, String> tipoIdentificacionColumn;
+
+    @FXML
+    private TableColumn<Proveedor, String> correoColumn;
 
     // Aquí puedes agregar métodos adicionales según sea necesario
 
@@ -111,6 +117,10 @@ public class EmpleadoController implements Initializable {
     @FXML
     private void handleFacturasClick() {
         System.out.println("Clic en el label 'Facturas'");
+    }
+    @FXML
+    private void handleCrearClick() {
+        System.out.println("Clic en el label 'crear'");
     }
 
     @FXML
@@ -145,44 +155,44 @@ public class EmpleadoController implements Initializable {
 
         }
         else if (!nombreField.getText().isEmpty() && !idField.getText().isEmpty() && !correoField.getText().isEmpty()){
-            Empleado empleado = empleadoRepo.findByIdAndCorreo(idField.getText(),correoField.getText()).orElse(null);
-            if(empleado == null){
+            Proveedor proveedor = proveedorRepo.findByDocumentoAndCorreo(idField.getText(),correoField.getText()).orElse(null);
+            if(proveedor == null){
                 mostrarAlerta("ese empleado no existe", "Error", Alert.AlertType.ERROR);
             }else{
-                empleadoRepo.delete(empleado);
+                proveedorRepo.delete(proveedor);
                 mostrarAlerta("empleado eliminado:)", "CONFIRMATION", Alert.AlertType.CONFIRMATION);
                 refrescarTablaPersonas();
             }
 
         }
         else if (nombreField.getText().isEmpty() && !idField.getText().isEmpty() && !correoField.getText().isEmpty()){
-            Empleado empleado = empleadoRepo.findByIdAndCorreo(idField.getText(),correoField.getText()).orElse(null);
-            if(empleado == null){
+            Proveedor proveedor = proveedorRepo.findByDocumentoAndCorreo(idField.getText(),correoField.getText()).orElse(null);
+            if(proveedor == null){
                 mostrarAlerta("ese empleado no existe", "Error", Alert.AlertType.ERROR);
             }else{
-                empleadoRepo.delete(empleado);
-                mostrarAlerta("empleado eliminado:)", "CONFIRMATION", Alert.AlertType.CONFIRMATION);
+                proveedorRepo.delete(proveedor);
+                mostrarAlerta("proveedor eliminado:)", "CONFIRMATION", Alert.AlertType.CONFIRMATION);
                 refrescarTablaPersonas();
             }
 
 
         }else if (nombreField.getText().isEmpty() && idField.getText().isEmpty() && !correoField.getText().isEmpty()){
-            Empleado empleado = empleadoRepo.findByCorreo(correoField.getText()).orElse(null);
-            if(empleado == null){
+            Proveedor proveedor = proveedorRepo.findByCorreo(correoField.getText()).orElse(null);
+            if(proveedor == null){
                 mostrarAlerta("ese empleado no existe", "Error", Alert.AlertType.ERROR);
             }else{
-                empleadoRepo.delete(empleado);
+                proveedorRepo.delete(proveedor);
                 mostrarAlerta("empleado eliminado:)", "CONFIRMATION", Alert.AlertType.CONFIRMATION);
                 refrescarTablaPersonas();
             }
 
 
         }else if (nombreField.getText().isEmpty() && !idField.getText().isEmpty() && correoField.getText().isEmpty()){
-            Empleado empleado = empleadoRepo.findById(idField.getText()).orElse(null);
-            if(empleado == null){
+            Proveedor proveedor = proveedorRepo.findById(idField.getText()).orElse(null);
+            if(proveedor == null){
                 mostrarAlerta("ese empleado no existe", "Error", Alert.AlertType.ERROR);
             }else{
-                empleadoRepo.delete(empleado);
+                proveedorRepo.delete(proveedor);
                 mostrarAlerta("empleado eliminado:)", "CONFIRMATION", Alert.AlertType.CONFIRMATION);
                 refrescarTablaPersonas();
             }
@@ -197,40 +207,40 @@ public class EmpleadoController implements Initializable {
     private void handleBuscarClick() {
 
          if (nombreField.getText().isEmpty() && idField.getText().isEmpty() && !correoField.getText().isEmpty()){
-            listaPersonasObservable.clear();
+            listaProveedoresObservable.clear();
             cargarEmpleadosPorCorreo( correoField.getText());
 
         }
         else if (!nombreField.getText().isEmpty() && idField.getText().isEmpty() && correoField.getText().isEmpty()){
-            listaPersonasObservable.clear();
+            listaProveedoresObservable.clear();
             cargarEmpleadosPorNombre( nombreField.getText());
 
         }
         else if (nombreField.getText().isEmpty() && !idField.getText().isEmpty() && correoField.getText().isEmpty()){
-            listaPersonasObservable.clear();
+            listaProveedoresObservable.clear();
             cargarEmpleadosPorId( idField.getText());
 
         }
         else if (!nombreField.getText().isEmpty() && !idField.getText().isEmpty() && !correoField.getText().isEmpty()){
-            listaPersonasObservable.clear();
+            listaProveedoresObservable.clear();
             cargarEmpleadosPorTodo(nombreField.getText(),idField.getText(),correoField.getText());
 
         }else if (!nombreField.getText().isEmpty() && !idField.getText().isEmpty() && correoField.getText().isEmpty()){
-            listaPersonasObservable.clear();
+            listaProveedoresObservable.clear();
             cargarEmpleadosPorNombreyId(nombreField.getText(),idField.getText());
 
         }else if (!nombreField.getText().isEmpty() && idField.getText().isEmpty() && !correoField.getText().isEmpty()){
-            listaPersonasObservable.clear();
+            listaProveedoresObservable.clear();
             cargarEmpleadosPorNombreyCorreo(nombreField.getText(),correoField.getText());
 
         }else if (nombreField.getText().isEmpty() && !idField.getText().isEmpty() && !correoField.getText().isEmpty()){
-            listaPersonasObservable.clear();
+            listaProveedoresObservable.clear();
             cargarEmpleadosPorIdyCorreo(idField.getText(),correoField.getText());
 
         }
         else{
-             listaPersonasObservable.clear();
-             listaPersonasObservable.addAll(empleadoRepo.findAll());
+             listaProveedoresObservable.clear();
+             listaProveedoresObservable.addAll(proveedorRepo.findAll());
         }
     }
     private void mostrarAlerta(String mensaje, String titulo, Alert.AlertType tipo) {
@@ -245,42 +255,45 @@ public class EmpleadoController implements Initializable {
     // Puedes agregar otros métodos según lo que necesites para manejar eventos u operaciones
 
     private void initializeTabla() {
-        // Configura la tabla y las columnas según tus necesidades
+        // Configura la tabla y sus columnas según tus necesidades
         // Por ejemplo, podrías enlazar las columnas con los datos del modelo
         nombreColumn.setCellValueFactory(new PropertyValueFactory<>("nombre"));
         direccionColumn.setCellValueFactory(new PropertyValueFactory<>("direccion"));
         telefonoColumn.setCellValueFactory(new PropertyValueFactory<>("telefono"));
-        cedulaColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        cedulaColumn.setCellValueFactory(new PropertyValueFactory<>("documento"));
+        tipoIdentificacionColumn.setCellValueFactory(new PropertyValueFactory<>("tipoDocumento"));
         correoColumn.setCellValueFactory(new PropertyValueFactory<>("correo"));
-        tablaEmpleados.setItems(listaPersonasObservable);
+
+        // Asigna la lista observable a la tabla
+        tablaProveedor.setItems(listaProveedoresObservable);
     }
     // Método para cargar empleados por correo
     private void cargarEmpleadosPorCorreo(String correo) {
-        listaPersonasObservable.addAll(empleadoRepo.findAllByCorreo(correo));
+        listaProveedoresObservable.addAll(proveedorRepo.findAllByCorreo(correo));
     }
 
     // Método para cargar empleados por ID
     private void cargarEmpleadosPorId(String id) {
-        listaPersonasObservable.addAll(empleadoRepo.findAllById(id));
+        listaProveedoresObservable.addAll(proveedorRepo.findAllByDocumento(id));
     }
     private void cargarEmpleadosPorTodo(String nombre,  String id,String correo) {
-        listaPersonasObservable.addAll(empleadoRepo.findAllByNombreAndIdAndCorreo(nombre,id,correo));
+        listaProveedoresObservable.addAll(proveedorRepo.findAllByNombreAndDocumentoAndCorreo(nombre,id,correo));
     }
     private void cargarEmpleadosPorNombreyId(String nombre,  String id) {
-        listaPersonasObservable.addAll(empleadoRepo.findAllByNombreAndId(nombre,id));
+        listaProveedoresObservable.addAll(proveedorRepo.findAllByNombreAndDocumento(nombre,id));
     }
     private void cargarEmpleadosPorNombreyCorreo(String nombre,  String correo) {
-        listaPersonasObservable.addAll(empleadoRepo.findAllByNombreAndCorreo(nombre,correo));
+        listaProveedoresObservable.addAll(proveedorRepo.findAllByNombreAndCorreo(nombre,correo));
     }
     private void cargarEmpleadosPorIdyCorreo(  String id,String correo) {
-        listaPersonasObservable.addAll(empleadoRepo.findAllByIdAndCorreo(id,correo));
+        listaProveedoresObservable.addAll(proveedorRepo.findAllByDocumentoAndCorreo(id,correo));
     }
     private void cargarEmpleadosPorNombre(  String nombre) {
-        listaPersonasObservable.addAll(empleadoRepo.findAllByNombre(nombre));
+        listaProveedoresObservable.addAll(proveedorRepo.findAllByNombre(nombre));
     }
     private void refrescarTablaPersonas() {
-        listaPersonasObservable.clear();
-        listaPersonasObservable.addAll(empleadoRepo.findAll());
+        listaProveedoresObservable.clear();
+        listaProveedoresObservable.addAll(proveedorRepo.findAll());
 
     }
 
@@ -288,6 +301,7 @@ public class EmpleadoController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeTabla();
         refrescarTablaPersonas();
+        CrearLabel.setOnMouseClicked(event -> handleCrearClick());
         inventarioLabel.setOnMouseClicked(event -> handleInventarioClick());
         actualizarLabel.setOnMouseClicked(event -> handleActualizarClick());
         historialLabel.setOnMouseClicked(event -> handleHistorialClick());

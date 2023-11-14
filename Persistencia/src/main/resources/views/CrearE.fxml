@@ -16,7 +16,7 @@
     <children>
         <ImageView fx:id="fondoImageView" fitHeight="630.0" fitWidth="1260.0" pickOnBounds="true" preserveRatio="true">
             <image>
-                <Image url="CrearEmpleado.jpg" />
+                <Image url="@CrearEmpleado.jpg" />
             </image>
         </ImageView>
       <Label fx:id="CrearLabel" layoutX="965.0" layoutY="553.0" prefHeight="37.0" prefWidth="147.0" />
@@ -28,17 +28,17 @@
       <TextField fx:id="cedulaField" layoutX="152.0" layoutY="420.0" prefHeight="25.0" prefWidth="258.0" />
       <TextField fx:id="nombreField1" layoutX="150.0" layoutY="321.0" prefHeight="25.0" prefWidth="258.0" />
       <TextField fx:id="contraseniaField" layoutX="739.0" layoutY="420.0" prefHeight="25.0" prefWidth="258.0" />
-      <TextField fx:id="contraseniaRepField" layoutX="747.0" layoutY="502.0" prefHeight="25.0" prefWidth="258.0" />
+      <TextField fx:id="contraseniaRepField" layoutX="739.0" layoutY="502.0" prefHeight="25.0" prefWidth="258.0" />
       <Label fx:id="Apellido" layoutX="747.0" layoutY="183.0" prefHeight="37.0" prefWidth="147.0" text="Apellido" textFill="#00000047">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Label>
-      <Label fx:id="Correo" layoutX="518.0" layoutY="256.0" prefHeight="37.0" prefWidth="147.0" text="Correo" textFill="#00000047">
+      <Label fx:id="Correo" layoutX="536.0" layoutY="256.0" prefHeight="37.0" prefWidth="147.0" text="Correo" textFill="#00000047">
          <font>
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="CorreoField" layoutX="437.0" layoutY="296.0" prefHeight="25.0" prefWidth="258.0" />
+      <TextField fx:id="CorreoField" layoutX="445.0" layoutY="296.0" prefHeight="25.0" prefWidth="258.0" />
     </children>
 </AnchorPane>

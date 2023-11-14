@@ -3,6 +3,7 @@ package co.edu.uniquindio.proyecto.Controllers;
 import co.edu.uniquindio.proyecto.entidades.Proveedor;
 import co.edu.uniquindio.proyecto.repositorios.ProveedorRepo;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import org.springframework.stereotype.Component;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -76,55 +77,62 @@ public class ActualizarPrController  implements Initializable {
         empleadosLabel.setOnMouseClicked(event -> handleEmpleadosClick());
         clientesLabel.setOnMouseClicked(event -> handleClientesClick());
     }
-
+    @FXML
     private void handleInventarioClick() {
         // Lógica cuando se hace clic en el label de inventario
         System.out.println("Inventario label clicado");
     }
-
+    @FXML
     private void handleActualizarClick() {
         // Lógica cuando se hace clic en el label de actualizar
 
-        if( nombreField.getText().isEmpty() || telefonoField.getText().isEmpty() || correoField.getText().isEmpty()   || direccionField.getText().isEmpty() ) {
-            JOptionPane.showMessageDialog(null, "No deje campos vacios");
-        }else if(proveedorRepo.findByCorreo(correoField.getText()).isPresent()){
-            JOptionPane.showMessageDialog(null, "ese correo ya esta registrado");
-        } else{
+        if (nombreField.getText().isEmpty() || telefonoField.getText().isEmpty() || correoField.getText().isEmpty() || direccionField.getText().isEmpty()) {
+            mostrarAlerta("No deje campos vacíos", "Error", Alert.AlertType.ERROR);
+        } else if (proveedorRepo.findByCorreo(correoField.getText()).isPresent()) {
+            mostrarAlerta("Ese correo ya está registrado", "Error", Alert.AlertType.ERROR);
+        } else {
             proveedor.setNombre(nombreField.getText());
             proveedor.setDireccion(direccionField.getText());
             proveedor.setCorreo(correoField.getText());
             proveedor.setTelefono(telefonoField.getText());
             proveedorRepo.save(proveedor);
-            JOptionPane.showMessageDialog(null, "proveedor actualizado :)");
-
+            mostrarAlerta("Proveedor actualizado :)", "CONFIRMATION", Alert.AlertType.CONFIRMATION);
+            // Puedes agregar acciones adicionales aquí después de guardar el proveedor
         }
     }
-
+    private void mostrarAlerta(String mensaje, String titulo, Alert.AlertType tipo) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null); // Puedes establecer un encabezado si lo deseas
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+    @FXML
     private void handleHistorialClick() {
         // Lógica cuando se hace clic en el label de historial
         System.out.println("Historial label clicado");
     }
-
+    @FXML
     private void handleFacturasClick() {
         // Lógica cuando se hace clic en el label de facturas
         System.out.println("Facturas label clicado");
     }
-
+    @FXML
     private void handleProveedoresClick() {
         // Lógica cuando se hace clic en el label de proveedores
         System.out.println("Proveedores label clicado");
     }
-
+    @FXML
     private void handleProductoClick() {
         // Lógica cuando se hace clic en el label de producto
         System.out.println("Producto label clicado");
     }
-
+    @FXML
     private void handleEmpleadosClick() {
         // Lógica cuando se hace clic en el label de empleados
         System.out.println("Empleados label clicado");
     }
-
+    @FXML
     private void handleClientesClick() {
         // Lógica cuando se hace clic en el label de clientes
         System.out.println("Clientes label clicado");
@@ -132,7 +140,14 @@ public class ActualizarPrController  implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        inventarioLabel.setOnMouseClicked(event -> handleInventarioClick());
+        actualizarLabel.setOnMouseClicked(event -> handleActualizarClick());
+        historialLabel.setOnMouseClicked(event -> handleHistorialClick());
+        facturasLabel.setOnMouseClicked(event -> handleFacturasClick());
+        proveedoresLabel.setOnMouseClicked(event -> handleProveedoresClick());
+        productoLabel.setOnMouseClicked(event -> handleProductoClick());
+        empleadosLabel.setOnMouseClicked(event -> handleEmpleadosClick());
+        clientesLabel.setOnMouseClicked(event -> handleClientesClick());
     }
 
 

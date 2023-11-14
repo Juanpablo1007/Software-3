@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -87,24 +88,7 @@ public class CrearProductoController implements Initializable {
 
     @FXML
     public void initialize() {
-        inventarioLabel.setOnMouseClicked(event -> handleInventarioClick());
-        CrearLabel.setOnMouseClicked(event -> handleCrearClick());
-        historialLabel.setOnMouseClicked(event -> handleHistorialClick());
-        facturasLabel.setOnMouseClicked(event -> handleFacturasClick());
-        proveedoresLabel.setOnMouseClicked(event -> handleProveedoresClick());
-        productoLabel.setOnMouseClicked(event -> handleProductoClick());
-        empleadosLabel.setOnMouseClicked(event -> handleEmpleadosClick());
-        clientesLabel.setOnMouseClicked(event -> handleClientesClick());
-        ObservableList<String> opciones = FXCollections.observableArrayList("MAQUILLAJE",
-                "CUIDADO_CABELLO",
-                "CUIDADO_PIEL",
-                "FRAGANCIAS",
-                "CUIDADO_UNAS",
-                "ACCESORIOS_BELLEZA",
-                "CATEGORIA_1",
-                "CATEGORIA_2",
-                "CATEGORIA_3");
-        CategoriaFind.setItems(opciones);
+
 
     }
 
@@ -135,40 +119,49 @@ public class CrearProductoController implements Initializable {
         }
     }
 
-
+    @FXML
     private void handleInventarioClick() {
         // Lógica cuando se hace clic en el label de inventario
         System.out.println("Inventario label clicado");
     }
 
+
+    @FXML
     private void handleCrearClick() {
-        if(nombreField.getText().isEmpty() || codigoField.getText().isEmpty() || PrecioMaximoField.getText().isEmpty() || PrecioMinimoField.getText().isEmpty()|| stockField1.getText().isEmpty()|| proveedorField1.getText().isEmpty() ){
-            JOptionPane.showMessageDialog(null, "No deje campos vacios");
-        }else if(!isNumeric( codigoField.getText())||!isNumeric(PrecioMaximoField.getText() )||!isNumeric(PrecioMinimoField.getText() ) || !isNumeric(stockField1.getText() ) ) {
-            JOptionPane.showMessageDialog(null, "No llene con letras los campos que son numeros .__.");
+        if (nombreField.getText().isEmpty() || codigoField.getText().isEmpty() || PrecioMaximoField.getText().isEmpty() || PrecioMinimoField.getText().isEmpty() || stockField1.getText().isEmpty() || proveedorField1.getText().isEmpty()) {
+            mostrarAlerta("No deje campos vacíos", "Error", Alert.AlertType.ERROR);
+        } else if (!isNumeric(codigoField.getText()) || !isNumeric(PrecioMaximoField.getText()) || !isNumeric(PrecioMinimoField.getText()) || !isNumeric(stockField1.getText())) {
+            mostrarAlerta("No llene con letras los campos que son números .__.", "Error", Alert.AlertType.ERROR);
         } else if (!proveedorRepo.findById(proveedorField1.getText()).isPresent()) {
-            JOptionPane.showMessageDialog(null, "el proveedor con el documento: " + proveedorField1.getText() + " no existe, porfavor creelo" );
+            mostrarAlerta("El proveedor con el documento: " + proveedorField1.getText() + " no existe, por favor créelo", "Error", Alert.AlertType.ERROR);
         } else {
             Proveedor proveedor = proveedorRepo.findByDocumento(proveedorField1.getText()).orElse(null);
-Double precioMax = Double.parseDouble(PrecioMaximoField.getText()) ;
-Double precioMin = Double.parseDouble(PrecioMinimoField.getText());
-Integer codi = Integer.parseInt( codigoField.getText());
-Integer Stock = Integer.parseInt( stockField1.getText());
-if(precioMin>precioMax){
-    JOptionPane.showMessageDialog(null, "el precio maximo no puede ser menor al minimo");
-} else if (Stock < 0 ){
-    JOptionPane.showMessageDialog(null, "El stock debe ser mayor a 0");
-} else{
-    Producto producto = new Producto(codi,nombreField.getText(),precioMin,precioMax,Traduciropciones(CategoriaFind.getSelectionModel().getSelectedItem()),proveedor,Stock);
-productoRepo.save(producto);
-    JOptionPane.showMessageDialog(null, "Producto creado :)");
-}
+            Double precioMax = Double.parseDouble(PrecioMaximoField.getText());
+            Double precioMin = Double.parseDouble(PrecioMinimoField.getText());
+            Integer codi = Integer.parseInt(codigoField.getText());
+            Integer stock = Integer.parseInt(stockField1.getText());
 
-
-
+            if (precioMin > precioMax) {
+                mostrarAlerta("El precio máximo no puede ser menor al mínimo", "Error", Alert.AlertType.ERROR);
+            } else if (stock < 0) {
+                mostrarAlerta("El stock debe ser mayor a 0", "Error", Alert.AlertType.ERROR);
+            }else if (productoRepo.findById(codi).isPresent()) {
+                mostrarAlerta("Ya existe un producto con ese codigo, porfavor ponga un codigo diferente", "Error", Alert.AlertType.ERROR);
+            } else {
+                Producto producto = new Producto(codi, nombreField.getText(), precioMin, precioMax, Traduciropciones(CategoriaFind.getSelectionModel().getSelectedItem()), proveedor, stock);
+                productoRepo.save(producto);
+                mostrarAlerta("Producto creado :)", "CONFIRMATION", Alert.AlertType.CONFIRMATION);
+                // Puedes agregar acciones adicionales aquí después de guardar el producto
+            }
         }
+    }
 
-
+    private void mostrarAlerta(String mensaje, String titulo, Alert.AlertType tipo) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null); // Puedes establecer un encabezado si lo deseas
+        alert.setContentText(mensaje);
+        alert.showAndWait();
     }
     public static boolean isNumeric(String str) {
         // Verifica si el String es nulo o está vacío
@@ -185,32 +178,32 @@ productoRepo.save(producto);
 
         // Si todos los caracteres son dígitos, retorna true
         return true;
-    }
+    } @FXML
     private void handleHistorialClick() {
         // Lógica cuando se hace clic en el label de historial
         System.out.println("Historial label clicado");
     }
-
+    @FXML
     private void handleFacturasClick() {
         // Lógica cuando se hace clic en el label de facturas
         System.out.println("Facturas label clicado");
     }
-
+    @FXML
     private void handleProveedoresClick() {
         // Lógica cuando se hace clic en el label de proveedores
         System.out.println("Proveedores label clicado");
     }
-
+    @FXML
     private void handleProductoClick() {
         // Lógica cuando se hace clic en el label de producto
         System.out.println("Producto label clicado");
     }
-
+    @FXML
     private void handleEmpleadosClick() {
         // Lógica cuando se hace clic en el label de empleados
         System.out.println("Empleados label clicado");
     }
-
+    @FXML
     private void handleClientesClick() {
         // Lógica cuando se hace clic en el label de clientes
         System.out.println("Clientes label clicado");
@@ -218,6 +211,23 @@ productoRepo.save(producto);
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        inventarioLabel.setOnMouseClicked(event -> handleInventarioClick());
+        CrearLabel.setOnMouseClicked(event -> handleCrearClick());
+        historialLabel.setOnMouseClicked(event -> handleHistorialClick());
+        facturasLabel.setOnMouseClicked(event -> handleFacturasClick());
+        proveedoresLabel.setOnMouseClicked(event -> handleProveedoresClick());
+        productoLabel.setOnMouseClicked(event -> handleProductoClick());
+        empleadosLabel.setOnMouseClicked(event -> handleEmpleadosClick());
+        clientesLabel.setOnMouseClicked(event -> handleClientesClick());
+        ObservableList<String> opciones = FXCollections.observableArrayList("MAQUILLAJE",
+                "CUIDADO_CABELLO",
+                "CUIDADO_PIEL",
+                "FRAGANCIAS",
+                "CUIDADO_UNAS",
+                "ACCESORIOS_BELLEZA",
+                "CATEGORIA_1",
+                "CATEGORIA_2",
+                "CATEGORIA_3");
+        CategoriaFind.setItems(opciones);
     }
 }

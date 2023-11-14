@@ -7,6 +7,7 @@ import co.edu.uniquindio.proyecto.entidades.Tipo_Documento;
 import co.edu.uniquindio.proyecto.repositorios.EmpleadoRepo;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,30 +59,34 @@ Administrador administrador = new Administrador();
     @FXML
     private void initialize() {
 
-        CrearLabel.setOnMouseClicked(event -> handleCrearClick());
-        RegresarLabel.setOnMouseClicked(event ->  handleRegresarClick());
     }
 
 
 
     @FXML
     private void handleCrearClick() {
-        if(ContraseñaAdminField.getText().isEmpty() || nombreField1 .getText().isEmpty() || cedulaField.getText().isEmpty() ||direccionField.getText().isEmpty()|| ApellidoField.getText().isEmpty()|| telefonoField.getText().isEmpty() || contraseniaField.getText().isEmpty() ||contraseniaRepField.getText().isEmpty() || CorreoField.getText().isEmpty()){
-            JOptionPane.showMessageDialog(null, "No deje campos vacios");
-        } else if (!ContraseñaAdminField.getText().equalsIgnoreCase(administrador.getContrasenia())){
-            JOptionPane.showMessageDialog(null, "la contraseña del administrados no conincide");
-        } else if (contraseniaField.getText().equals(contraseniaRepField.getText())){
-            JOptionPane.showMessageDialog(null, "las contraseñas no coninciden");
-        }else if (empleadoRepo.findByCorreo(CorreoField.getText()).isPresent()){
-            JOptionPane.showMessageDialog(null, "este correo ya se encuentra registrado");
-        } else{
-            Empleado empleado = new Empleado(cedulaField.getText(),nombreField1 .getText(),ApellidoField.getText(),direccionField.getText(),CorreoField.getText() ,telefonoField.getText(), contraseniaField.getText(), Tipo_Documento.CEDULA_CIUDADANIA);
-       empleadoRepo.save(empleado);
-            JOptionPane.showMessageDialog(null, "empleado registrado con exito");
+        if (ContraseñaAdminField.getText().isEmpty() || nombreField1.getText().isEmpty() || cedulaField.getText().isEmpty() || direccionField.getText().isEmpty() || ApellidoField.getText().isEmpty() || telefonoField.getText().isEmpty() || contraseniaField.getText().isEmpty() || contraseniaRepField.getText().isEmpty() || CorreoField.getText().isEmpty()) {
+            mostrarAlerta("No deje campos vacíos", "Error", Alert.AlertType.ERROR);
+        } else if (!ContraseñaAdminField.getText().equalsIgnoreCase("12345")) {
+            mostrarAlerta("La contraseña del administrador no coincide", "Error", Alert.AlertType.ERROR);
+        } else if (!contraseniaField.getText().equals(contraseniaRepField.getText())) {
+            mostrarAlerta("Las contraseñas no coinciden", "Error", Alert.AlertType.ERROR);
+        } else if (empleadoRepo.findByCorreo(CorreoField.getText()).isPresent()) {
+            mostrarAlerta("Este correo ya se encuentra registrado", "Error", Alert.AlertType.ERROR);
+        } else {
+            Empleado empleado = new Empleado(cedulaField.getText(), nombreField1.getText(), ApellidoField.getText(), direccionField.getText(), CorreoField.getText(), telefonoField.getText(), contraseniaField.getText(), Tipo_Documento.CEDULA_CIUDADANIA);
+            empleadoRepo.save(empleado);
+            mostrarAlerta("Empleado registrado con éxito", "CONFIRMATION", Alert.AlertType.CONFIRMATION);
+            // Puedes agregar acciones adicionales aquí después de guardar el empleado
         }
-
     }
-
+    private void mostrarAlerta(String mensaje, String titulo, Alert.AlertType tipo) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null); // Puedes establecer un encabezado si lo deseas
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
     @FXML
     private void handleRegresarClick() {
         // Lógica cuando se hace clic en el botón Regresar
@@ -91,5 +96,7 @@ Administrador administrador = new Administrador();
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        CrearLabel.setOnMouseClicked(event -> handleCrearClick());
+        RegresarLabel.setOnMouseClicked(event ->  handleRegresarClick());
     }
 }

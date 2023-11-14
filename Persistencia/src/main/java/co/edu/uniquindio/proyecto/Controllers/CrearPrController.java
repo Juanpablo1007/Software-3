@@ -10,6 +10,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -31,13 +32,27 @@ public class CrearPrController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        inventarioLabel.setOnMouseClicked(event -> handleInventarioClick());
+        CrearLabel.setOnMouseClicked(event -> handleCrearClick());
+        historialLabel.setOnMouseClicked(event -> handleHistorialClick());
+        facturasLabel.setOnMouseClicked(event -> handleFacturasClick());
+        proveedoresLabel.setOnMouseClicked(event -> handleProveedoresClick());
+        productoLabel.setOnMouseClicked(event -> handleProductoClick());
+        empleadosLabel.setOnMouseClicked(event -> handleEmpleadosClick());
+        clientesLabel.setOnMouseClicked(event -> handleClientesClick());
+        ObservableList<String> opciones = FXCollections.observableArrayList("CEDULA_CIUDADANIA",
+                "TARJETA_IDENTIDAD",
+                "CEDULA_EXTRANJERIA",
+                "PASAPORTE",
+                "LICENCIA_CONDUCCION",
+                "OTRO");
+        TipoDocumento.setItems(opciones);
     }
     @FXML
     private Label inventarioLabel;
 
     @FXML
-    private Label crearLabel;
+    private Label CrearLabel;
 
     @FXML
     private Label historialLabel;
@@ -88,49 +103,41 @@ public class CrearPrController implements Initializable {
     // Por ejemplo, puedes agregar un método que maneje un evento
     @FXML
     private void initialize() {
-        inventarioLabel.setOnMouseClicked(event -> handleInventarioClick());
-        crearLabel.setOnMouseClicked(event -> handleCrearClick());
-        historialLabel.setOnMouseClicked(event -> handleHistorialClick());
-        facturasLabel.setOnMouseClicked(event -> handleFacturasClick());
-        proveedoresLabel.setOnMouseClicked(event -> handleProveedoresClick());
-        productoLabel.setOnMouseClicked(event -> handleProductoClick());
-        empleadosLabel.setOnMouseClicked(event -> handleEmpleadosClick());
-        clientesLabel.setOnMouseClicked(event -> handleClientesClick());
-        ObservableList<String> opciones = FXCollections.observableArrayList("CEDULA_CIUDADANIA",
-                "TARJETA_IDENTIDAD",
-                "CEDULA_EXTRANJERIA",
-                "PASAPORTE",
-                "LICENCIA_CONDUCCION",
-                "OTRO");
-        TipoDocumento.setItems(opciones);
+
     }
 
     // Agrega otros métodos según sea necesario
-
+    @FXML
     private void handleInventarioClick() {
         // Lógica cuando se hace clic en el label de inventario
         System.out.println("Inventario label clicado");
     }
-
+    @FXML
     private void handleCrearClick() {
-        if(correoField.getText().isEmpty() || nombreField.getText().isEmpty() || telefonoField.getText().isEmpty() || correoField.getText().isEmpty() || cedulaField.getText().isEmpty()  || direccionField.getText().isEmpty()  ){
-            JOptionPane.showMessageDialog(null, "No deje campos vacios");
-        }else if(proveedorRepo.findById(cedulaField.getText()).isPresent()){
-            JOptionPane.showMessageDialog(null, "esa cedula ya esta registrada");
-        }else if(proveedorRepo.findByCorreo(correoField.getText()).isPresent()){
-            JOptionPane.showMessageDialog(null, "ese correo ya esta registrado");
-        }else{
+        if (correoField.getText().isEmpty() || nombreField.getText().isEmpty() || telefonoField.getText().isEmpty() || correoField.getText().isEmpty() || cedulaField.getText().isEmpty() || direccionField.getText().isEmpty()) {
+            mostrarAlerta("No deje campos vacíos", "Error", Alert.AlertType.ERROR);
+        } else if (proveedorRepo.findById(cedulaField.getText()).isPresent()) {
+            mostrarAlerta("Esa cédula ya está registrada", "Error", Alert.AlertType.ERROR);
+        } else if (proveedorRepo.findByCorreo(correoField.getText()).isPresent()) {
+            mostrarAlerta("Ese correo ya está registrado", "Error", Alert.AlertType.ERROR);
+        } else {
             Tipo_Documento tipoDocumento = Traduciropciones(TipoDocumento.getSelectionModel().getSelectedItem());
             List<Producto> productos = new ArrayList<>();
 
-            Proveedor proveedor = new Proveedor(cedulaField.getText(),nombreField.getText(),direccionField.getText(),correoField.getText(),telefonoField.getText(), tipoDocumento,productos);
-             proveedorRepo.save(proveedor);
-            JOptionPane.showMessageDialog(null, "PROVEEDOR CREADO CON EXITO :)");
+            Proveedor proveedor = new Proveedor(cedulaField.getText(), nombreField.getText(), direccionField.getText(), correoField.getText(), telefonoField.getText(), tipoDocumento, productos);
+            proveedorRepo.save(proveedor);
+            mostrarAlerta("Proveedor creado con éxito :)", "CONFIRMATION", Alert.AlertType.CONFIRMATION);
+            // Puedes agregar acciones adicionales aquí después de guardar el proveedor
         }
-
-
     }
-
+    private void mostrarAlerta(String mensaje, String titulo, Alert.AlertType tipo) {
+        Alert alert = new Alert(tipo);
+        alert.setTitle(titulo);
+        alert.setHeaderText(null); // Puedes establecer un encabezado si lo deseas
+        alert.setContentText(mensaje);
+        alert.showAndWait();
+    }
+    @FXML
     public Tipo_Documento Traduciropciones (String opcion){
 
         if (opcion.equals("CEDULA_CIUDADANIA")){
@@ -146,32 +153,32 @@ public class CrearPrController implements Initializable {
         }
 
     }
-
+    @FXML
     private void handleHistorialClick() {
         // Lógica cuando se hace clic en el label de historial
         System.out.println("Historial label clicado");
     }
-
+    @FXML
     private void handleFacturasClick() {
         // Lógica cuando se hace clic en el label de facturas
         System.out.println("Facturas label clicado");
     }
-
+    @FXML
     private void handleProveedoresClick() {
         // Lógica cuando se hace clic en el label de proveedores
         System.out.println("Proveedores label clicado");
     }
-
+    @FXML
     private void handleProductoClick() {
         // Lógica cuando se hace clic en el label de producto
         System.out.println("Producto label clicado");
     }
-
+    @FXML
     private void handleEmpleadosClick() {
         // Lógica cuando se hace clic en el label de empleados
         System.out.println("Empleados label clicado");
     }
-
+    @FXML
     private void handleClientesClick() {
         // Lógica cuando se hace clic en el label de clientes
         System.out.println("Clientes label clicado");

@@ -14,6 +14,7 @@ import java.util.Optional;
 public interface ProveedorRepo extends JpaRepository <Proveedor, String>{
 
     List<Proveedor> findAll();
+    List<Proveedor> findAllByDocumento(String id);
     List <Proveedor> findAllByNombre(String nombre);
     Optional<Proveedor> findByDocumento(String Documento);
 
@@ -21,4 +22,15 @@ public interface ProveedorRepo extends JpaRepository <Proveedor, String>{
     Optional<Proveedor> findByNombreAndDocumentoAndCorreo(String nombre,String Documento,String Correo);
     List <Proveedor> findAllByTipoDocumento(Tipo_Documento tipoDocumento);
 
+    List <Proveedor> findAllByCorreo(String correo);
+
+    List <Proveedor> findAllByNombreAndDocumentoAndCorreo(String nombre, String id, String correo);
+
+    List <Proveedor> findAllByNombreAndDocumento(String nombre, String id);
+
+    List <Proveedor> findAllByNombreAndCorreo(String nombre, String correo);
+
+    List <Proveedor>findAllByDocumentoAndCorreo(String id, String correo);
+
+    Optional<Proveedor> findByDocumentoAndCorreo(String text, String text1);
 }

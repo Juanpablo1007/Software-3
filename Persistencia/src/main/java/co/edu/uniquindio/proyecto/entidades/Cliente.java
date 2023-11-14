@@ -17,7 +17,7 @@ import java.util.List;
 public class Cliente implements Serializable{
     @Column(nullable = false, length = 255)
     @Id
-    private String id_cliente;
+    private String idcliente;
     @Column(nullable = false, length = 255)
     private String nombre;
 
@@ -37,7 +37,7 @@ public class Cliente implements Serializable{
     @OneToMany(mappedBy="cliente", cascade = CascadeType.ALL)
     private List<Factura> facturas;
     public Cliente(String id_cliente, String nombre, String apellido, String direccion, String correo, String telefono, Tipo_Documento tipoDocumento) {
-        this.id_cliente = id_cliente;
+        this.idcliente = id_cliente;
         this.nombre = nombre;
         this.apellido = apellido;
         this.direccion = direccion;
