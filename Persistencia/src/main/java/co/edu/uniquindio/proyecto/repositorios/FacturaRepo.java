@@ -19,4 +19,5 @@ public interface FacturaRepo  extends JpaRepository<Factura, Integer> {
 
     List<Factura> findAllByFecha ( Date fecha);
 
+    List<Factura> findAllByOrderByCodigoDesc();
 }

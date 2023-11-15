@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquindio.proyecto.Controllers.InventarioController">
+    <children>
+        <ImageView fx:id="fondoImageView" fitHeight="630.0" fitWidth="1260.0" pickOnBounds="true" preserveRatio="true">
+            <image>
+                <Image url="@gestion%20inventario.jpg" />
+            </image>
+        </ImageView>
+        <Label fx:id="inventarioLabel" layoutX="40.0" layoutY="126.0" prefHeight="20.0" prefWidth="90.0" />
+        <Label fx:id="actualizarLabel" layoutX="851.0" layoutY="150.0" prefHeight="30.0" prefWidth="110.0" />
+        <Label fx:id="historialLabel" layoutX="30.0" layoutY="160.0" prefHeight="30.0" prefWidth="90.0" />
+        <Label fx:id="facturasLabel" layoutX="30.0" layoutY="200.0" prefHeight="30.0" prefWidth="90.0" />
+        <Label fx:id="proveedoresLabel" layoutX="30.0" layoutY="240.0" prefHeight="30.0" prefWidth="120.0" />
+        <Label fx:id="cantidadLabel" layoutX="1064.0" layoutY="421.0" prefHeight="30.0" prefWidth="26.0" text="0" textAlignment="CENTER" textFill="#825997">
+         <font>
+            <Font name="Arial" size="12.0" />
+         </font></Label>
+        <Label fx:id="empleadosLabel" layoutX="30.0" layoutY="320.0" prefHeight="30.0" prefWidth="120.0" />
+        <Label fx:id="clientesLabel" layoutX="20.0" layoutY="360.0" prefHeight="30.0" prefWidth="120.0" />
+
+        <Label fx:id="fechaLabel" layoutX="1080.0" layoutY="30.0" prefHeight="19.0" prefWidth="140.0" text="Fecha-hora" textAlignment="CENTER" textFill="#923ee7" />
+        <Label fx:id="nombreUsuarioLabel" layoutX="1114.0" layoutY="8.0" prefHeight="25.0" prefWidth="100.0" text="Nombre usuario" textFill="#923ee7" />
+
+        <Label fx:id="eliminarLabel" layoutX="1095.0" layoutY="150.0" prefHeight="30.0" prefWidth="110.0" />
+        <Label fx:id="buscarLabel" layoutX="970.0" layoutY="150.0" prefHeight="30.0" prefWidth="110.0" />
+
+        <TextField fx:id="correoField" layoutX="560.0" layoutY="150.0" prefHeight="30.0" prefWidth="120.0" />
+        <TextField fx:id="idField" layoutX="420.0" layoutY="150.0" prefHeight="30.0" prefWidth="120.0" />
+        <TextField fx:id="nombreField" layoutX="290.0" layoutY="150.0" prefHeight="30.0" prefWidth="120.0" />
+
+        <TableView fx:id="tablaProductos" layoutX="259.0" layoutY="280.0" prefHeight="270.0" prefWidth="673.0">
+            <columns>
+                <TableColumn fx:id="cantidadColumn" prefWidth="145.0" text="Cantidad" />
+                <TableColumn fx:id="productoColumn" prefWidth="160.0" text="Producto" />
+                <TableColumn fx:id="valorUnidadColumn" prefWidth="170.0" text="Valor Unidad" />
+                <TableColumn fx:id="valorTotalColumn" prefWidth="197.0" text="Valor Total" />
+            </columns>
+        </TableView>
+
+        <TextField fx:id="nombreProductoField" layoutX="550.0" layoutY="240.0" prefHeight="30.0" prefWidth="150.0" />
+        <TextField fx:id="totalField" editable="false" layoutX="1050.0" layoutY="375.0" prefHeight="30.0" prefWidth="150.0" />
+        <TextField fx:id="subtotalField" editable="false" layoutX="1050.0" layoutY="305.0" prefHeight="30.0" prefWidth="150.0" />
+
+        <Label fx:id="agregarLabel" layoutX="970.0" layoutY="225.0" prefHeight="40.0" prefWidth="83.0" />
+
+        <TextField fx:id="idProductoField" layoutX="275.0" layoutY="240.0" prefHeight="30.0" prefWidth="150.0" />
+        <TextField fx:id="direccionField" editable="false" layoutX="560.0" layoutY="150.0" prefHeight="30.0" prefWidth="120.0" />
+        <TextField fx:id="nombreClienteField" layoutX="420.0" layoutY="150.0" prefHeight="30.0" prefWidth="120.0" />
+        <TextField fx:id="idClienteField" layoutX="290.0" layoutY="150.0" prefHeight="30.0" prefWidth="120.0" />
+
+        <Label fx:id="descuentoLabel" layoutX="940.0" layoutY="145.0" prefHeight="40.0" prefWidth="120.0" />
+      <Button fx:id="FacturaFisicaButton" layoutX="989.0" layoutY="478.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color : #f48fb1;: Color fondo;" text="Generar Factura Fisica" textAlignment="CENTER" textFill="#945fae">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="FacturaVirtualButton" layoutX="988.0" layoutY="515.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="178.0" style="-fx-background-color : #f48fb1;: Color fondo;" text="Generar Factura Virtual" textAlignment="CENTER" textFill="#945fae">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <TextField fx:id="CantidadField1" layoutX="782.0" layoutY="240.0" prefHeight="30.0" prefWidth="150.0" />
+
+    </children>
+</AnchorPane>

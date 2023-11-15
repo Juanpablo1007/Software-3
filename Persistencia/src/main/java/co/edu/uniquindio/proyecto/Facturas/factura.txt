@@ -1,0 +1,5 @@
+Codigo de la factura:6
+Wed Nov 15 00:32:52 COT 2023
+Valor Total: 300.0
+Cliente: Cliente 1Responsable de la venta: Juan
+Tipo de factura: FISICADetalle_Factura{codigo: 6, cantidad de productos: 4, precio por unidad: 75.0, factura: 6, producto: Producto 3}

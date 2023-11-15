@@ -39,11 +39,11 @@ public class Detalle_Factura implements Serializable{
     @Override
     public String toString() {
         return "Detalle_Factura{" +
-                "codigo=" + codigo +
-                ", cantidad=" + cantidad +
-                ", precio_unidad=" + precio_unidad +
-                ", factura=" + (factura != null ? factura.getCodigo() : null) +
-                ", producto=" + (producto != null ? producto.getCodigo() : null) +
+                "codigo: " + codigo +
+                ", cantidad de productos: " + cantidad +
+                ", precio por unidad: " + precio_unidad +
+                ", factura: " + (factura != null ? factura.getCodigo() : null) +
+                ", producto: " + (producto != null ? producto.getNombre() : null) +
                 '}';
     }
 }

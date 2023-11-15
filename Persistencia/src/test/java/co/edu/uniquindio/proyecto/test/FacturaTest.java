@@ -33,7 +33,7 @@ public class FacturaTest {
     public void registrarTest() {
         Date fechaActual = new Date();
         Cliente cliente = clienteRepo.findById("1").orElse(null);
-        Empleado empleado = empleadoRepo.findByCorreoAndAndContrasenia("empleado3@correo.com","confidential789").orElse(null);
+        Empleado empleado = empleadoRepo.findByCorreoAndContrasenia("empleado3@correo.com","confidential789").orElse(null);
         ArrayList<Detalle_Factura> productos = new ArrayList<>();
 
         Factura factura = new Factura(fechaActual, 150000, cliente,empleado,Tipo_Factura.ELECTRONICA, productos);

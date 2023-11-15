@@ -35,7 +35,7 @@ public class Producto  implements Serializable{
     @ManyToOne
     @JoinColumn(name = "proveedor_documento")
     private Proveedor proveedor;
-    @OneToMany(mappedBy="producto")
+    @OneToMany(mappedBy="producto", cascade = CascadeType.ALL)
     private List<Detalle_Factura> facturas;
 
     public Producto(Integer codigo,String nombre,Double precio_minimo,Double precio_maximo,Categoria categoria,Proveedor proveedor,Integer stock) {

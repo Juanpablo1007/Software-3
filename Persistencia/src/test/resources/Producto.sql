@@ -1,7 +1,6 @@
 -- Registros de Proveedor
 -- Insertar el primer registro
-INSERT INTO Proveedor
-VALUES ('1', 'proveedor1@correo.com', 'Dirección 1', 'Proveedor 1', '123456789', 'CEDULA_CIUDADANIA');
+INSERT INTO Proveedor VALUES ('6', 'proveedor1@correo.com', 'Dirección 1', 'Juan', '123456789', 'CEDULA_CIUDADANIA');
 
 -- Insertar el segundo registro
 INSERT INTO Proveedor
@@ -22,7 +21,7 @@ VALUES ('5', 'proveedor5@correo.com', 'Dirección 5', 'Proveedor 5', '999999999'
 
 -- Registros de Producto
 -- Insertar el primer registro con valor de enum
-INSERT INTO Producto VALUES (1, 'MAQUILLAJE', 'Producto 1', 100.0, 50.0, 10, '1');
+INSERT INTO Producto VALUES (6, 'MAQUILLAJE', 'Brillo', 100.0, 50.0, 10, '1');
 
 -- Insertar el segundo registro con valor de enum
 INSERT INTO Producto VALUES (2, 'CUIDADO_CABELLO', 'Producto 2', 200.0, 100.0, 20, '2');
