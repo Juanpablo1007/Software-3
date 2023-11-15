@@ -14,6 +14,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,6 +24,9 @@ import java.util.ResourceBundle;
 
 @Component
 public class CrearProductoController implements Initializable {
+    @Autowired
+    SceneController sceneController;
+
     @Autowired
     ProductoRepo productoRepo;
 
@@ -120,11 +124,14 @@ public class CrearProductoController implements Initializable {
     }
 
     @FXML
-    private void handleInventarioClick() {
-        // Lógica cuando se hace clic en el label de inventario
-        System.out.println("Inventario label clicado");
+    void handleInventarioClick(MouseEvent event ) {
+        abrirVentanaInventario(event, empleadoLogin);
+        inventarioLabel.getScene().getWindow().hide();
+        System.out.println("Clic en el label 'Inventario'");
     }
-
+    private void abrirVentanaInventario(MouseEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaInventario(event, empleado);
+    }
 
     @FXML
     private void handleCrearClick() {
@@ -211,7 +218,7 @@ public class CrearProductoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        inventarioLabel.setOnMouseClicked(event -> handleInventarioClick());
+        inventarioLabel.setOnMouseClicked(event -> handleInventarioClick(event));
         CrearLabel.setOnMouseClicked(event -> handleCrearClick());
         historialLabel.setOnMouseClicked(event -> handleHistorialClick());
         facturasLabel.setOnMouseClicked(event -> handleFacturasClick());

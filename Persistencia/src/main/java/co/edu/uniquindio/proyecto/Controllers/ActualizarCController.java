@@ -185,7 +185,7 @@ public class ActualizarCController implements Initializable {
         fechaLabel.setText("Fecha: " + java.time.LocalDate.now());
     }
     public void displayclienteIDUsername(Cliente clientecito){
-        clientecito = cliente;
+        cliente = clientecito;
 
     }
 

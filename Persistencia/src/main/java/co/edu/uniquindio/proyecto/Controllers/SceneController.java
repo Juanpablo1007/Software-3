@@ -31,8 +31,9 @@ public class SceneController {
             Parent root = loader.load();
 
             ActualizarCController controlador = loader.getController();
-            controlador.displayEmployeeIDUsername(empleadoLogueado);
             controlador.displayclienteIDUsername(clientell);
+            controlador.displayEmployeeIDUsername(empleadoLogueado);
+
 
             Stage stage = new Stage();
             Scene scene = new Scene(root);
@@ -77,7 +78,7 @@ public class SceneController {
 
     }
 
-    public void cambiarAVentanaActualizarProveedor(MouseEvent event, Empleado empleadoLogueado) {
+    public void cambiarAVentanaActualizarProveedor(MouseEvent event, Empleado empleadoLogueado,Proveedor proveedor) {
 
 
         try {
@@ -87,6 +88,7 @@ public class SceneController {
 
             ActualizarPrController controlador = loader.getController();
             controlador.displayEmployeeIDUsername(empleadoLogueado);
+            controlador.generarProveedor(proveedor);
 
             Stage stage = new Stage();
             Scene scene = new Scene(root);
@@ -104,7 +106,7 @@ public class SceneController {
 
     }
 
-    public void cambiarAVentanaActualizarProducto(MouseEvent event, Empleado empleadoLogueado) {
+    public void cambiarAVentanaActualizarProducto(MouseEvent event, Empleado empleadoLogueado, Producto producto) {
 
 
         try {
@@ -114,6 +116,7 @@ public class SceneController {
 
             ActualizarProductoController controlador = loader.getController();
             controlador.displayEmployeeIDUsername(empleadoLogueado);
+            controlador.actuproducto(producto);
 
             Stage stage = new Stage();
             Scene scene = new Scene(root);

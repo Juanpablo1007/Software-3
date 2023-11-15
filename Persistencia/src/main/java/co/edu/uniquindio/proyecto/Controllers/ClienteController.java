@@ -106,8 +106,11 @@ Cliente cliente;
 
     @FXML
     private void handleActualizarClick(MouseEvent event) {
+cliente = clienteRepo.findById(idField.getText()).orElse(null);
+if(cliente != null){
+   sceneController.cambiarAVentanaActualizarCliente(event,empleadoLogin,cliente);
+}
 
-        abrirVentanaactualizarCliente(event, empleadoLogin );
 
     }
 

@@ -6,11 +6,16 @@ import co.edu.uniquindio.proyecto.repositorios.ProveedorRepo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.stereotype.Component;
 
 import java.net.URL;
@@ -19,10 +24,15 @@ import java.util.ResourceBundle;
 @Component
 public class ProveedorController implements Initializable {
 
+
+    @Autowired
+    private ConfigurableApplicationContext springContext;
     @Autowired
     SceneController sceneController;
     @Autowired
     ProveedorRepo proveedorRepo;
+
+    Proveedor proveedor;
     ObservableList<Proveedor> listaProveedoresObservable = FXCollections.observableArrayList();
 
     private Empleado empleadoLogin;
@@ -113,8 +123,15 @@ public class ProveedorController implements Initializable {
     }
 
     @FXML
-    private void handleActualizarClick() {
-        System.out.println("Clic en el label 'Actualizar'");
+    private void handleActualizarClick(MouseEvent event ) {
+
+
+
+        proveedor=proveedorRepo.findById(idField.getText()).orElse(null);
+if(proveedor != null){
+    sceneController.cambiarAVentanaActualizarProveedor(event, empleadoLogin, proveedor);
+}
+
     }
 
     @FXML
@@ -129,10 +146,13 @@ public class ProveedorController implements Initializable {
         System.out.println("Clic en el label 'Facturas'");
     }
     @FXML
-    private void handleCrearClick() {
-        System.out.println("Clic en el label 'crear'");
-    }
+    private void handleCrearClick(MouseEvent event) {
 
+        crearJ(event);
+    }
+private void crearJ (MouseEvent event){
+        sceneController.cambiarAVentanaCrearProveedor(event,empleadoLogin);
+}
     @FXML
     private void handleProveedoresClick(MouseEvent event)
     {
@@ -324,9 +344,9 @@ public class ProveedorController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeTabla();
         refrescarTablaPersonas();
-        CrearLabel.setOnMouseClicked(event -> handleCrearClick());
+        CrearLabel.setOnMouseClicked(event -> handleCrearClick(event));
         inventarioLabel.setOnMouseClicked(event -> handleInventarioClick(event));
-        actualizarLabel.setOnMouseClicked(event -> handleActualizarClick());
+        actualizarLabel.setOnMouseClicked(event -> handleActualizarClick(event));
         historialLabel.setOnMouseClicked(event -> handleHistorialClick(event));
         facturasLabel.setOnMouseClicked(event -> handleFacturasClick(event));
         proveedoresLabel.setOnMouseClicked(event -> handleProveedoresClick(event));

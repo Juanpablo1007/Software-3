@@ -518,17 +518,21 @@ public class InventarioController implements Initializable {
 
     private void handleHistorialLabelClick(MouseEvent event) {
         System.out.println("Clic en Historial");
+        historialLabel.getScene().getWindow().hide();
         abrirVentanaHistorial(event, empleadoLogin);
 
     }
     private void handleProductoClick(MouseEvent event) {
         abrirVentanaProducto(event, empleadoLogin);
+        productoLabel.getScene().getWindow().hide();
         System.out.println("Clic en Producto");
     }
 
     private void handleFacturasLabelClick(MouseEvent event) {
         System.out.println("Clic en Facturas");
+
         abrirVentanaFacturas(event, empleadoLogin);
+        facturasLabel.getScene().getWindow().hide();
     }
     private void abrirVentanaFactura(MouseEvent event, Empleado empleado) {
         sceneController.cambiarAVentanaFactura(event, empleado);
@@ -537,6 +541,7 @@ public class InventarioController implements Initializable {
     private void handleProveedoresLabelClick(MouseEvent event) {
         System.out.println("Clic en Proveedores");
         abrirVentanaProveedores(event, empleadoLogin);
+        productoLabel.getScene().getWindow().hide();
     }
     private void handleClientesLabelClick(MouseEvent event) {
         System.out.println("Clic en Clientes");
@@ -544,11 +549,13 @@ public class InventarioController implements Initializable {
             mostrarAlerta("No tiene permisos para acceder a esta ventana", "Error de entrada", Alert.AlertType.ERROR);
         }else{
             abrirVentanaClientes(event, empleadoLogin);
+            empleadosLabel.getScene().getWindow().hide();
         }
     }
 
     private void abrirVentanaClientes(MouseEvent event, Empleado empleado) {
         sceneController.cambiarAVentanaCliente(event, empleado);
+        
     }
 
     private void abrirVentanaHistorial(MouseEvent event, Empleado empleado) {

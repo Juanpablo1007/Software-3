@@ -64,6 +64,8 @@ public class ProductoController implements Initializable {
 
     @FXML
     private Label buscarLabel;
+    @FXML
+    private Label CrearLabel;
 
     @FXML
     private ComboBox<String> CategoriaFind;
@@ -96,8 +98,24 @@ public class ProductoController implements Initializable {
     private TableColumn<Producto, Integer> stockColumn;
 
     @FXML
-    void handleActualizarClick() {
-        System.out.println("Clic en el label 'Actualizar'");
+    void handleActualizarClick(MouseEvent event
+                               ) {
+
+        String codigoText = idField.getText();
+        Integer codigo = null;
+        try {
+            if (!codigoText.isEmpty()) {
+                codigo = Integer.parseInt(codigoText);
+                Producto producto = productoRepo.findById(codigo).orElse(null);
+                if(producto != null){
+                    sceneController.cambiarAVentanaActualizarProducto(event,empleadoLogin,producto);
+                }
+            }
+        } catch (NumberFormatException e) {
+            // Maneja la excepción si el código no es un número válido
+            mostrarAlerta("El código debe ser un número válido.", "Error de entrada", Alert.AlertType.ERROR);
+            return;
+        }
     }
 
     @FXML
@@ -147,6 +165,7 @@ public class ProductoController implements Initializable {
             mostrarAlerta("No tiene permisos para acceder a esta ventana", "Error de entrada", Alert.AlertType.ERROR);
         }else{
             abrirVentanaEmpleados(event, empleadoLogin);
+            empleadosLabel.getScene().getWindow().hide();
         }
         System.out.println("Clic en el label 'Empleados'");
     }
@@ -154,32 +173,40 @@ public class ProductoController implements Initializable {
     @FXML
     void handleFacturasClick(MouseEvent event) {
         abrirVentanaFacturas(event, empleadoLogin);
+        facturasLabel.getScene().getWindow().hide();
         System.out.println("Clic en el label 'Facturas'");
     }
 
     @FXML
     void handleHistorialClick(MouseEvent event) {
         abrirVentanaHistorial(event, empleadoLogin);
+        historialLabel.getScene().getWindow();
         System.out.println("Clic en el label 'Historial'");
     }
 
     @FXML
     void handleInventarioClick(MouseEvent event ) {
         abrirVentanaInventario(event, empleadoLogin);
+        inventarioLabel.getScene().getWindow().hide();
         System.out.println("Clic en el label 'Inventario'");
     }
 
     @FXML
     void handleProveedoresClick(MouseEvent event) {
-
         abrirVentanaProveedores(event, empleadoLogin);
+        proveedoresLabel.getScene().getWindow().hide();
         System.out.println("Clic en el label 'Proveedores'");
     }
 
     @FXML
     void handleProductoClick(MouseEvent event) {
         abrirVentanaProducto(event, empleadoLogin);
+        productoLabel.getScene().getWindow().hide();
         System.out.println("Clic en el label 'Producto'");
+    }
+    @FXML
+    void handleCrearClick(MouseEvent event){
+        sceneController.cambiarAVentanaCrearProducto(event,empleadoLogin);
     }
 
     @FXML
@@ -322,13 +349,14 @@ public class ProductoController implements Initializable {
 
         // Set click handlers
         inventarioLabel.setOnMouseClicked(event -> handleInventarioClick(event));
-        actualizarLabel.setOnMouseClicked(event -> handleActualizarClick());
+        actualizarLabel.setOnMouseClicked(event -> handleActualizarClick(event));
         historialLabel.setOnMouseClicked(event -> handleHistorialClick(event));
         facturasLabel.setOnMouseClicked(event -> handleFacturasClick(event));
         proveedoresLabel.setOnMouseClicked(event -> handleProveedoresClick(event));
         productoLabel.setOnMouseClicked(event -> handleProductoClick(event));
         empleadosLabel.setOnMouseClicked(event -> handleEmpleadosClick(event));
         clientesLabel.setOnMouseClicked(event -> handleClientesClick(event));
+        CrearLabel.setOnMouseClicked(event -> handleCrearClick(event));
         eliminarLabel.setOnMouseClicked(event -> handleEliminarClick());
         buscarLabel.setOnMouseClicked(event -> handleBuscarClick());
         ObservableList<String> opciones = FXCollections.observableArrayList("MAQUILLAJE",

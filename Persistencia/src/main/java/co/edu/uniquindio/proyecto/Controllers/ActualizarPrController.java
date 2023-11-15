@@ -72,14 +72,7 @@ public class ActualizarPrController  implements Initializable {
 
     @FXML
     public void initialize() {
-        inventarioLabel.setOnMouseClicked(event -> handleInventarioClick());
-        actualizarLabel.setOnMouseClicked(event -> handleActualizarClick());
-        historialLabel.setOnMouseClicked(event -> handleHistorialClick());
-        facturasLabel.setOnMouseClicked(event -> handleFacturasClick());
-        proveedoresLabel.setOnMouseClicked(event -> handleProveedoresClick());
-        productoLabel.setOnMouseClicked(event -> handleProductoClick());
-        empleadosLabel.setOnMouseClicked(event -> handleEmpleadosClick());
-        clientesLabel.setOnMouseClicked(event -> handleClientesClick());
+
     }
     @FXML
     private void handleInventarioClick() {
@@ -87,7 +80,7 @@ public class ActualizarPrController  implements Initializable {
         System.out.println("Inventario label clicado");
     }
     @FXML
-    private void handleActualizarClick() {
+    void handleActualizarClick() {
         // Lógica cuando se hace clic en el label de actualizar
 
         if (nombreField.getText().isEmpty() || telefonoField.getText().isEmpty() || correoField.getText().isEmpty() || direccionField.getText().isEmpty()) {
@@ -159,6 +152,8 @@ public class ActualizarPrController  implements Initializable {
         nombreUsuarioLabel.setText(empleado.getNombre());
         fechaLabel.setText("Fecha: " + java.time.LocalDate.now());
     }
-
+   public  void generarProveedor (Proveedor proveedor1){
+        proveedor = proveedor1;
+}
 
 }

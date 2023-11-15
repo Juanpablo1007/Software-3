@@ -43,6 +43,6 @@
             </columns>
         </TableView>
         <ComboBox fx:id="CategoriaFind" layoutX="551.0" layoutY="156.0" prefHeight="38.0" prefWidth="140.0" promptText="Categoria" />
-      <Label fx:id="CrearLabel" layoutX="730.0" layoutY="150.0" prefHeight="30.0" prefWidth="110.0" />
+      <Label fx:id="CrearLabel" layoutX="704.0" layoutY="150.0" prefHeight="30.0" prefWidth="110.0" />
     </children>
 </AnchorPane>

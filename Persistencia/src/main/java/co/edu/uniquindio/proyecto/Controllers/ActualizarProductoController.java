@@ -229,4 +229,7 @@ public class ActualizarProductoController implements Initializable {
         nombreUsuarioLabel.setText(empleado.getNombre());
         fechaLabel.setText("Fecha: " + java.time.LocalDate.now());
     }
+    public void actuproducto(Producto p){
+        producto = p;
+    }
 }
