@@ -24,7 +24,7 @@ public class PersistenciaApplication   extends Application {
 try {
     //primaryStage.getIcons().add(new Image(PersistenciaApplication.class.getResourceAsStream("views/images/logo.png")));
     primaryStage.setTitle("Multibelleza");
-    FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/Inventario.fxml"));    loader.setControllerFactory(context::getBean);
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/login.fxml"));    loader.setControllerFactory(context::getBean);
     AnchorPane rootLayout = loader.load();
     Scene scene = new Scene(rootLayout);
     primaryStage.setScene(scene);

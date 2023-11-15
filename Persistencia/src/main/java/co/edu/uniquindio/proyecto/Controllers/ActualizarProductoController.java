@@ -2,6 +2,7 @@ package co.edu.uniquindio.proyecto.Controllers;
 
 
 import co.edu.uniquindio.proyecto.entidades.Categoria;
+import co.edu.uniquindio.proyecto.entidades.Empleado;
 import co.edu.uniquindio.proyecto.entidades.Producto;
 import co.edu.uniquindio.proyecto.entidades.Proveedor;
 import co.edu.uniquindio.proyecto.repositorios.ProductoRepo;
@@ -28,7 +29,7 @@ public class ActualizarProductoController implements Initializable {
 
     Producto producto;
 
-
+    private Empleado empleadoLogin;
 
 
     @FXML
@@ -222,5 +223,10 @@ public class ActualizarProductoController implements Initializable {
                 "CATEGORIA_2",
                 "CATEGORIA_3");
         CategoriaFind.setItems(opciones);
+    }
+    public void displayEmployeeIDUsername(Empleado empleado){
+        empleadoLogin = empleado;
+        nombreUsuarioLabel.setText(empleado.getNombre());
+        fechaLabel.setText("Fecha: " + java.time.LocalDate.now());
     }
 }

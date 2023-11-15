@@ -3,6 +3,7 @@ package co.edu.uniquindio.proyecto.Controllers;
 
 
 import co.edu.uniquindio.proyecto.entidades.Cliente;
+import co.edu.uniquindio.proyecto.entidades.Empleado;
 import co.edu.uniquindio.proyecto.entidades.Tipo_Documento;
 import co.edu.uniquindio.proyecto.repositorios.ClienteRepo;
 import javafx.collections.FXCollections;
@@ -26,6 +27,8 @@ public class CrearCController implements Initializable {
     ClienteRepo clienteRepo;
 
     Cliente cliente;
+
+    private Empleado empleadoLogin;
     @FXML
     private Label inventarioLabel;
 
@@ -180,5 +183,11 @@ public class CrearCController implements Initializable {
                 "OTRO");
         TipoDocumento.setItems(opciones);
     }
+    public void displayEmployeeIDUsername(Empleado empleado){
+        empleadoLogin = empleado;
+        nombreUsuarioLabel.setText(empleado.getNombre());
+        fechaLabel.setText("Fecha: " + java.time.LocalDate.now());
+    }
+
 }
 

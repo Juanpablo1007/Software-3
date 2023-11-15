@@ -1,6 +1,7 @@
 package co.edu.uniquindio.proyecto.Controllers;
 
 import co.edu.uniquindio.proyecto.entidades.Categoria;
+import co.edu.uniquindio.proyecto.entidades.Empleado;
 import co.edu.uniquindio.proyecto.entidades.Producto;
 import co.edu.uniquindio.proyecto.repositorios.ProductoRepo;
 import javafx.collections.FXCollections;
@@ -9,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,9 +21,13 @@ import java.util.ResourceBundle;
 public class ProductoController implements Initializable {
 
     @Autowired
+    SceneController sceneController;
+    @Autowired
     ProductoRepo productoRepo;
 
     ObservableList<Producto> listaProductos = FXCollections.observableArrayList();
+
+    private Empleado empleadoLogin;
 
     @FXML
     private Label inventarioLabel;
@@ -95,7 +101,12 @@ public class ProductoController implements Initializable {
     }
 
     @FXML
-    void handleClientesClick() {
+    void handleClientesClick(MouseEvent event   ) {
+        if(!empleadoLogin.getNombre().equalsIgnoreCase("ADMIN")){
+            mostrarAlerta("No tiene permisos para acceder a esta ventana", "Error de entrada", Alert.AlertType.ERROR);
+        }else{
+            abrirVentanaClientes(event, empleadoLogin);
+        }
         System.out.println("Clic en el label 'Clientes'");
     }
 
@@ -131,32 +142,43 @@ public class ProductoController implements Initializable {
 
 
     @FXML
-    void handleEmpleadosClick() {
+    void handleEmpleadosClick(MouseEvent event) {
+        if(!empleadoLogin.getNombre().equalsIgnoreCase("ADMIN")){
+            mostrarAlerta("No tiene permisos para acceder a esta ventana", "Error de entrada", Alert.AlertType.ERROR);
+        }else{
+            abrirVentanaEmpleados(event, empleadoLogin);
+        }
         System.out.println("Clic en el label 'Empleados'");
     }
 
     @FXML
-    void handleFacturasClick() {
+    void handleFacturasClick(MouseEvent event) {
+        abrirVentanaFacturas(event, empleadoLogin);
         System.out.println("Clic en el label 'Facturas'");
     }
 
     @FXML
-    void handleHistorialClick() {
+    void handleHistorialClick(MouseEvent event) {
+        abrirVentanaHistorial(event, empleadoLogin);
         System.out.println("Clic en el label 'Historial'");
     }
 
     @FXML
-    void handleInventarioClick() {
+    void handleInventarioClick(MouseEvent event ) {
+        abrirVentanaInventario(event, empleadoLogin);
         System.out.println("Clic en el label 'Inventario'");
     }
 
     @FXML
-    void handleProveedoresClick() {
+    void handleProveedoresClick(MouseEvent event) {
+
+        abrirVentanaProveedores(event, empleadoLogin);
         System.out.println("Clic en el label 'Proveedores'");
     }
 
     @FXML
-    void handleProductoClick() {
+    void handleProductoClick(MouseEvent event) {
+        abrirVentanaProducto(event, empleadoLogin);
         System.out.println("Clic en el label 'Producto'");
     }
 
@@ -299,14 +321,14 @@ public class ProductoController implements Initializable {
         listaProductos.addAll(productoRepo.findAll());
 
         // Set click handlers
-        inventarioLabel.setOnMouseClicked(event -> handleInventarioClick());
+        inventarioLabel.setOnMouseClicked(event -> handleInventarioClick(event));
         actualizarLabel.setOnMouseClicked(event -> handleActualizarClick());
-        historialLabel.setOnMouseClicked(event -> handleHistorialClick());
-        facturasLabel.setOnMouseClicked(event -> handleFacturasClick());
-        proveedoresLabel.setOnMouseClicked(event -> handleProveedoresClick());
-        productoLabel.setOnMouseClicked(event -> handleProductoClick());
-        empleadosLabel.setOnMouseClicked(event -> handleEmpleadosClick());
-        clientesLabel.setOnMouseClicked(event -> handleClientesClick());
+        historialLabel.setOnMouseClicked(event -> handleHistorialClick(event));
+        facturasLabel.setOnMouseClicked(event -> handleFacturasClick(event));
+        proveedoresLabel.setOnMouseClicked(event -> handleProveedoresClick(event));
+        productoLabel.setOnMouseClicked(event -> handleProductoClick(event));
+        empleadosLabel.setOnMouseClicked(event -> handleEmpleadosClick(event));
+        clientesLabel.setOnMouseClicked(event -> handleClientesClick(event));
         eliminarLabel.setOnMouseClicked(event -> handleEliminarClick());
         buscarLabel.setOnMouseClicked(event -> handleBuscarClick());
         ObservableList<String> opciones = FXCollections.observableArrayList("MAQUILLAJE",
@@ -319,6 +341,38 @@ public class ProductoController implements Initializable {
                 "CATEGORIA_2",
                 "CATEGORIA_3");
         CategoriaFind.setItems(opciones);
+    }
+
+
+    private void abrirVentanaClientes(MouseEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaCliente(event, empleado);
+    }
+
+    private void abrirVentanaInventario(MouseEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaInventario(event, empleado);
+    }
+
+    private void abrirVentanaHistorial(MouseEvent event, Empleado empleado) {
+        // sceneController.(event, empleado);
+    }
+    private void abrirVentanaProducto(MouseEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaProducto(event, empleado);
+    }
+
+    private void abrirVentanaFacturas(MouseEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaInventario(event, empleado);
+    }
+    private void abrirVentanaEmpleados(MouseEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaEmpleado(event, empleado);
+    }
+
+    private void abrirVentanaProveedores(MouseEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaProveedor(event, empleado);
+    }
+    public void displayEmployeeIDUsername(Empleado empleado){
+        empleadoLogin = empleado;
+        nombreUsuarioLabel.setText(empleado.getNombre());
+        fechaLabel.setText("Fecha: " + java.time.LocalDate.now());
     }
 
 }

@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,6 +27,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 @Component
 public class InventarioController implements Initializable {
+
+    @Autowired
+    private SceneController sceneController;
     @Autowired
     ProductoRepo productoRepo;
     @Autowired
@@ -35,6 +39,8 @@ public class InventarioController implements Initializable {
     FacturaRepo facturaRepo;
     @Autowired
     EmpleadoRepo empleadoRepo;
+
+    private Empleado empleadoLogin;
 
     @Autowired
     Detalle_FacturaRepo detalleFacturaRepo;
@@ -135,7 +141,8 @@ public class InventarioController implements Initializable {
     @FXML
     private Label descuentoLabel;
 
-
+    @FXML
+    private Label productoLabel;
 
     @FXML
     private Button FacturaFisicaButton;
@@ -156,16 +163,17 @@ empleado = empleadoRepo.findById("1").orElse(null);
         // Load products
         listaCarrito.addAll(carrito);
 
+        productoLabel.setOnMouseClicked(event -> handleProductoClick(event));
         eliminarLabel.setOnMouseClicked(event -> handleEliminarLabelClick());
         buscarLabel.setOnMouseClicked(event -> handleBuscarLabelClick());
         inventarioLabel.setOnMouseClicked(event -> handleInventarioLabelClick());
         actualizarLabel.setOnMouseClicked(event -> handleActualizarLabelClick());
-        historialLabel.setOnMouseClicked(event -> handleHistorialLabelClick());
-        facturasLabel.setOnMouseClicked(event -> handleFacturasLabelClick());
-        proveedoresLabel.setOnMouseClicked(event -> handleProveedoresLabelClick());
+        historialLabel.setOnMouseClicked(event -> handleHistorialLabelClick(event));
+        facturasLabel.setOnMouseClicked(event -> handleFacturasLabelClick(event));
+        proveedoresLabel.setOnMouseClicked(event -> handleProveedoresLabelClick(event));
         cantidadLabel.setOnMouseClicked(event -> handleCantidadLabelClick());
-        empleadosLabel.setOnMouseClicked(event -> handleEmpleadosLabelClick());
-        clientesLabel.setOnMouseClicked(event -> handleClientesLabelClick());
+        empleadosLabel.setOnMouseClicked(event -> handleEmpleadosLabelClick(event));
+        clientesLabel.setOnMouseClicked(event -> handleClientesLabelClick(event));
         agregarLabel.setOnMouseClicked(event -> handleAgregarLabelClick());
         descuentoLabel.setOnMouseClicked(event -> handleDescuentoLabelClick());
         FacturaFisicaButton.setOnAction(event -> handleFacturaFisicaButtonClick());
@@ -507,25 +515,72 @@ empleado = empleadoRepo.findById("1").orElse(null);
         System.out.println("Clic en Actualizar");
     }
 
-    private void handleHistorialLabelClick() {
+    private void handleHistorialLabelClick(MouseEvent event) {
         System.out.println("Clic en Historial");
+        abrirVentanaHistorial(event, empleadoLogin);
+
+    }
+    private void handleProductoClick(MouseEvent event) {
+        abrirVentanaProducto(event, empleadoLogin);
+        System.out.println("Clic en Producto");
     }
 
-    private void handleFacturasLabelClick() {
+    private void handleFacturasLabelClick(MouseEvent event) {
         System.out.println("Clic en Facturas");
+        abrirVentanaFacturas(event, empleadoLogin);
     }
 
-    private void handleProveedoresLabelClick() {
+
+    private void handleProveedoresLabelClick(MouseEvent event) {
         System.out.println("Clic en Proveedores");
+        abrirVentanaProveedores(event, empleadoLogin);
+    }
+    private void handleClientesLabelClick(MouseEvent event) {
+        System.out.println("Clic en Clientes");
+        if(!empleadoLogin.getNombre().equalsIgnoreCase("ADMIN")){
+            mostrarAlerta("No tiene permisos para acceder a esta ventana", "Error de entrada", Alert.AlertType.ERROR);
+        }else{
+            abrirVentanaClientes(event, empleadoLogin);
+        }
+    }
+
+    private void abrirVentanaClientes(MouseEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaCliente(event, empleado);
+    }
+
+    private void abrirVentanaHistorial(MouseEvent event, Empleado empleado) {
+       // sceneController.(event, empleado);
+    }
+    private void abrirVentanaProducto(MouseEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaProducto(event, empleado);
+    }
+
+    private void abrirVentanaFacturas(MouseEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaInventario(event, empleado);
+    }
+
+
+    private void abrirVentanaProveedores(MouseEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaProveedor(event, empleado);
     }
 
     private void handleCantidadLabelClick() {
         System.out.println("Clic en Cantidad");
     }
 
-    private void handleEmpleadosLabelClick() {
+    private void handleEmpleadosLabelClick(MouseEvent event) {
         System.out.println("Clic en Empleados");
+        if(!empleadoLogin.getNombre().equalsIgnoreCase("ADMIN")){
+            mostrarAlerta("No tiene permisos para acceder a esta ventana", "Error de entrada", Alert.AlertType.ERROR);
+        }else{
+            abrirVentanaEmpleados(event, empleadoLogin);
+        }
     }
+
+    private void abrirVentanaEmpleados(MouseEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaEmpleado(event, empleado);
+    }
+
     public Tipo_Factura traducirOpciones(String opcion) {
         switch (opcion) {
             case "FISICA":
@@ -539,8 +594,14 @@ empleado = empleadoRepo.findById("1").orElse(null);
         }
     }
 
-    private void handleClientesLabelClick() {
-        System.out.println("Clic en Clientes");
+
+
+
+
+    public void displayEmployeeIDUsername(Empleado empleado){
+        empleadoLogin = empleado;
+        nombreUsuarioLabel.setText(empleado.getNombre());
+        fechaLabel.setText("Fecha: " + java.time.LocalDate.now());
     }
 }
 

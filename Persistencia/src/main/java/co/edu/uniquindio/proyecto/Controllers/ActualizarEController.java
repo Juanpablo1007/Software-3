@@ -31,6 +31,9 @@ public class ActualizarEController implements Initializable  {
     EmpleadoRepo empleadoRepo;
 
     Empleado empleado;
+
+    private Empleado empleadoLogin;
+
     @FXML
     private Label inventarioLabel;
 
@@ -136,6 +139,11 @@ public class ActualizarEController implements Initializable  {
     private void handleClientesClick() {
         // Lógica cuando se hace clic en el label de clientes
         System.out.println("Clientes label clicado");
+    }
+    public void displayEmployeeIDUsername(Empleado empleado){
+        empleadoLogin = empleado;
+        nombreUsuarioLabel.setText(empleado.getNombre());
+        fechaLabel.setText("Fecha: " + java.time.LocalDate.now());
     }
 
 }

@@ -1,9 +1,6 @@
 package co.edu.uniquindio.proyecto.Controllers;
 
-import co.edu.uniquindio.proyecto.entidades.Cliente;
-import co.edu.uniquindio.proyecto.entidades.Producto;
-import co.edu.uniquindio.proyecto.entidades.Proveedor;
-import co.edu.uniquindio.proyecto.entidades.Tipo_Documento;
+import co.edu.uniquindio.proyecto.entidades.*;
 import co.edu.uniquindio.proyecto.repositorios.ClienteRepo;
 import co.edu.uniquindio.proyecto.repositorios.ProveedorRepo;
 import javafx.collections.FXCollections;
@@ -28,7 +25,7 @@ public class CrearPrController implements Initializable {
     @Autowired
     ProveedorRepo proveedorRepo;
 
-
+    private Empleado empleadoLogin;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -182,5 +179,10 @@ public class CrearPrController implements Initializable {
     private void handleClientesClick() {
         // Lógica cuando se hace clic en el label de clientes
         System.out.println("Clientes label clicado");
+    }
+    public void displayEmployeeIDUsername(Empleado empleado){
+        empleadoLogin = empleado;
+        nombreUsuarioLabel.setText(empleado.getNombre());
+        fechaLabel.setText("Fecha: " + java.time.LocalDate.now());
     }
 }

@@ -17,9 +17,15 @@ import java.util.ResourceBundle;
 
 @Component
 public class EmpleadoController implements Initializable {
+
+    @Autowired
+    SceneController sceneController;
     @Autowired
     EmpleadoRepo empleadoRepo;
     ObservableList<Empleado> listaPersonasObservable = FXCollections.observableArrayList();
+
+    private Empleado empleadoLogin;
+
     @FXML
     private Label inventarioLabel;
 
@@ -94,42 +100,53 @@ public class EmpleadoController implements Initializable {
 
     }
     @FXML
-    private void handleInventarioClick() {
+    private void handleInventarioClick(MouseEvent event)
+    {
+        abrirVentanaInventario(event, empleadoLogin);
         System.out.println("Clic en el label 'Inventario'");
     }
 
     @FXML
-    private void handleActualizarClick() {
+    private void handleActualizarClick()
+    {
         System.out.println("Clic en el label 'Actualizar'");
     }
 
     @FXML
-    private void handleHistorialClick() {
+    private void handleHistorialClick(MouseEvent event)
+    {
+        abrirVentanaHistorial(event, empleadoLogin);
         System.out.println("Clic en el label 'Historial'");
     }
 
     @FXML
-    private void handleFacturasClick() {
+    private void handleFacturasClick(MouseEvent event) {
+        abrirVentanaFacturas(event, empleadoLogin);
         System.out.println("Clic en el label 'Facturas'");
     }
 
     @FXML
-    private void handleProveedoresClick() {
+    private void handleProveedoresClick(MouseEvent event) {
+        abrirVentanaProveedores(event, empleadoLogin);
         System.out.println("Clic en el label 'Proveedores'");
     }
 
     @FXML
-    private void handleProductoClick() {
+    private void handleProductoClick(MouseEvent event) {
+        abrirVentanaProducto(event, empleadoLogin);
         System.out.println("Clic en el label 'Producto'");
     }
 
     @FXML
-    private void handleEmpleadosClick() {
+    private void handleEmpleadosClick(MouseEvent event  ) {
+        abrirVentanaEmpleados(event, empleadoLogin);
         System.out.println("Clic en el label 'Empleados'");
     }
 
     @FXML
-    private void handleClientesClick() {
+    private void handleClientesClick(MouseEvent event   ) {
+
+        abrirVentanaClientes(event, empleadoLogin);
         System.out.println("Clic en el label 'Clientes'");
     }
 
@@ -284,19 +301,52 @@ public class EmpleadoController implements Initializable {
 
     }
 
+
+
+    private void abrirVentanaClientes(MouseEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaCliente(event, empleado);
+    }
+
+    private void abrirVentanaInventario(MouseEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaInventario(event, empleado);
+    }
+
+    private void abrirVentanaHistorial(MouseEvent event, Empleado empleado) {
+        // sceneController.(event, empleado);
+    }
+    private void abrirVentanaProducto(MouseEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaProducto(event, empleado);
+    }
+
+    private void abrirVentanaFacturas(MouseEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaInventario(event, empleado);
+    }
+    private void abrirVentanaEmpleados(MouseEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaEmpleado(event, empleado);
+    }
+
+    private void abrirVentanaProveedores(MouseEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaProveedor(event, empleado);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeTabla();
         refrescarTablaPersonas();
-        inventarioLabel.setOnMouseClicked(event -> handleInventarioClick());
+        inventarioLabel.setOnMouseClicked(event -> handleInventarioClick(event));
         actualizarLabel.setOnMouseClicked(event -> handleActualizarClick());
-        historialLabel.setOnMouseClicked(event -> handleHistorialClick());
-        facturasLabel.setOnMouseClicked(event -> handleFacturasClick());
-        proveedoresLabel.setOnMouseClicked(event -> handleProveedoresClick());
-        productoLabel.setOnMouseClicked(event -> handleProductoClick());
-        empleadosLabel.setOnMouseClicked(event -> handleEmpleadosClick());
-        clientesLabel.setOnMouseClicked(event -> handleClientesClick());
+        historialLabel.setOnMouseClicked(event -> handleHistorialClick(event));
+        facturasLabel.setOnMouseClicked(event -> handleFacturasClick(event));
+        proveedoresLabel.setOnMouseClicked(event -> handleProveedoresClick(event));
+        productoLabel.setOnMouseClicked(event -> handleProductoClick(event));
+        empleadosLabel.setOnMouseClicked(event -> handleEmpleadosClick(event));
+        clientesLabel.setOnMouseClicked(event -> handleClientesClick(event));
         eliminarLabel.setOnMouseClicked(event ->handleEliminarClick());
         buscarLabel.setOnMouseClicked(event -> handleBuscarClick());
+    }
+    public void displayEmployeeIDUsername(Empleado empleado){
+        empleadoLogin = empleado;
+        nombreUsuarioLabel.setText(empleado.getNombre());
+        fechaLabel.setText("Fecha: " + java.time.LocalDate.now());
     }
 }

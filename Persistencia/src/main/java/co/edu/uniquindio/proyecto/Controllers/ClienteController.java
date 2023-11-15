@@ -21,6 +21,9 @@ public class ClienteController implements Initializable {
     @Autowired
     ClienteRepo clienteRepo;
     ObservableList<Cliente> listaClientesObservable = FXCollections.observableArrayList();
+
+    private Empleado empleadoLogin;
+
     @FXML
     private Label inventarioLabel;
 
@@ -87,14 +90,11 @@ public class ClienteController implements Initializable {
     @FXML
     private TableColumn<Proveedor, String> tipoIdentificacionColumn;
 
-    // Aquí puedes agregar métodos adicionales según sea necesario
 
-    // Por ejemplo, si necesitas inicializar algo cuando se carga la vista
 
 
     @FXML
     private void initialize() {
-        // Inicializa la tabla y sus columnas, si es necesario
 
     }
     @FXML
@@ -307,5 +307,10 @@ public class ClienteController implements Initializable {
         clientesLabel.setOnMouseClicked(event -> handleClientesClick());
         eliminarLabel.setOnMouseClicked(event ->handleEliminarClick());
         buscarLabel.setOnMouseClicked(event -> handleBuscarClick());
+    }
+    public void displayEmployeeIDUsername(Empleado empleado){
+        empleadoLogin = empleado;
+        nombreUsuarioLabel.setText(empleado.getNombre());
+        fechaLabel.setText("Fecha: " + java.time.LocalDate.now());
     }
 }

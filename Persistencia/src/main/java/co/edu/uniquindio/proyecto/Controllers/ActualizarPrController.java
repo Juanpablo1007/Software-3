@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyecto.Controllers;
 
+import co.edu.uniquindio.proyecto.entidades.Empleado;
 import co.edu.uniquindio.proyecto.entidades.Proveedor;
 import co.edu.uniquindio.proyecto.repositorios.ProveedorRepo;
 import javafx.fxml.Initializable;
@@ -24,6 +25,9 @@ public class ActualizarPrController  implements Initializable {
     ProveedorRepo proveedorRepo;
 
    Proveedor proveedor;
+
+    private Empleado empleadoLogin;
+
     @FXML
     private Label inventarioLabel;
 
@@ -148,6 +152,12 @@ public class ActualizarPrController  implements Initializable {
         productoLabel.setOnMouseClicked(event -> handleProductoClick());
         empleadosLabel.setOnMouseClicked(event -> handleEmpleadosClick());
         clientesLabel.setOnMouseClicked(event -> handleClientesClick());
+    }
+
+    public void displayEmployeeIDUsername(Empleado empleado){
+        empleadoLogin = empleado;
+        nombreUsuarioLabel.setText(empleado.getNombre());
+        fechaLabel.setText("Fecha: " + java.time.LocalDate.now());
     }
 
 

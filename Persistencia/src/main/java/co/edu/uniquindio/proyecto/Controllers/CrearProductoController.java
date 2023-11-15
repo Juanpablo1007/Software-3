@@ -29,7 +29,7 @@ public class CrearProductoController implements Initializable {
     @Autowired
     ProveedorRepo proveedorRepo;
 
-
+    private Empleado empleadoLogin;
 
 
     @FXML
@@ -229,5 +229,10 @@ public class CrearProductoController implements Initializable {
                 "CATEGORIA_2",
                 "CATEGORIA_3");
         CategoriaFind.setItems(opciones);
+    }
+    public void displayEmployeeIDUsername(Empleado empleado){
+        empleadoLogin = empleado;
+        nombreUsuarioLabel.setText(empleado.getNombre());
+        fechaLabel.setText("Fecha: " + java.time.LocalDate.now());
     }
 }

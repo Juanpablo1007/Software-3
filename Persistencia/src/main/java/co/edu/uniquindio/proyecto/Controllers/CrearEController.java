@@ -22,7 +22,7 @@ public class CrearEController implements Initializable {
 @Autowired
     EmpleadoRepo empleadoRepo;
 Administrador administrador = new Administrador();
-
+    private Empleado empleadoLogin;
 
     @FXML
     private Label CrearLabel;
@@ -97,6 +97,10 @@ Administrador administrador = new Administrador();
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         CrearLabel.setOnMouseClicked(event -> handleCrearClick());
-        RegresarLabel.setOnMouseClicked(event ->  handleRegresarClick());
+        RegresarLabel.setOnMouseClicked(event -> handleRegresarClick());
+
+    }
+    public void displayEmployeeIDUsername(Empleado empleado){
+        //no tiene campos de fecha ni nombre usuario
     }
 }
