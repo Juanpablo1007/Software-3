@@ -10,6 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -89,8 +90,10 @@ Administrador administrador = new Administrador();
     }
     @FXML
     private void handleRegresarClick() {
-        // Lógica cuando se hace clic en el botón Regresar
-        System.out.println("Botón Regresar clicado");
+        Stage stage = (Stage) RegresarLabel.getScene().getWindow();
+
+        // Cerramos la ventana
+        stage.close();
     }
 
     @Override

@@ -1,7 +1,7 @@
 package co.edu.uniquindio.proyecto.Controllers;
 
-import co.edu.uniquindio.proyecto.entidades.Administrador;
-import co.edu.uniquindio.proyecto.entidades.Empleado;
+import co.edu.uniquindio.proyecto.entidades.*;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -24,7 +24,7 @@ public class SceneController {
     @Autowired
     private ConfigurableApplicationContext springContext;
 
-    public void cambiarAVentanaActualizarCliente(MouseEvent event, Empleado empleadoLogueado) {
+    public void cambiarAVentanaActualizarCliente(MouseEvent event, Empleado empleadoLogueado, Cliente clientell) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/actualizarC.fxml"));
             loader.setControllerFactory(springContext::getBean);
@@ -32,6 +32,7 @@ public class SceneController {
 
             ActualizarCController controlador = loader.getController();
             controlador.displayEmployeeIDUsername(empleadoLogueado);
+            controlador.displayclienteIDUsername(clientell);
 
             Stage stage = new Stage();
             Scene scene = new Scene(root);
@@ -157,7 +158,7 @@ public class SceneController {
 
     }
 
-    public void cambiarAVentanaCrearEmpleado(MouseEvent event, Empleado empleadoLogueado) {
+    public void cambiarAVentanaCrearEmpleado(MouseEvent event) {
 
 
         try {
@@ -166,7 +167,7 @@ public class SceneController {
             Parent root = loader.load();
 
             CrearEController controlador = loader.getController();
-            controlador.displayEmployeeIDUsername(empleadoLogueado);
+
 
             Stage stage = new Stage();
             Scene scene = new Scene(root);
@@ -367,6 +368,31 @@ public class SceneController {
         }
 
     }
+    public void cambiarAVentanaFactura(MouseEvent event, Empleado empleadoLogueado) {
 
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/views/factura.fxml"));
+            loader.setControllerFactory(springContext::getBean);
+            Parent root = loader.load();
+
+            FacturaController controlador = loader.getController();
+            controlador.displayEmployeeIDUsername(empleadoLogueado);
+
+            Stage stage = new Stage();
+            Scene scene = new Scene(root);
+
+            stage.setTitle("Multibelleza del Quindio");
+            stage.setMinHeight(700);
+            stage.setMinWidth(1100);
+            stage.setScene(scene);
+            stage.show();
+
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+
+    }
 
 }

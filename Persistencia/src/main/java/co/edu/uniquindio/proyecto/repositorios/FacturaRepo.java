@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface FacturaRepo  extends JpaRepository<Factura, Integer> {
     Optional<Factura> findByCodigo(Integer codigo);
-
+    List<Factura> findAllByEmpleado_Nombre(String nombre);
 
     List<Factura> findAll();
 
@@ -20,4 +20,6 @@ public interface FacturaRepo  extends JpaRepository<Factura, Integer> {
     List<Factura> findAllByFecha ( Date fecha);
 
     List<Factura> findAllByOrderByCodigoDesc();
+
+    List<Factura> findAllByCodigo(Integer codigo);
 }

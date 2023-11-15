@@ -184,6 +184,11 @@ public class ActualizarCController implements Initializable {
         nombreUsuarioLabel.setText(empleado.getNombre());
         fechaLabel.setText("Fecha: " + java.time.LocalDate.now());
     }
+    public void displayclienteIDUsername(Cliente clientecito){
+        clientecito = cliente;
+
+    }
+
 
 
 }

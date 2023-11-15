@@ -28,7 +28,7 @@ public class LoginController  {
 
     Empleado empleadoAdmin = new Empleado("00000", "ADMIN", "", "", "yutu6d1@hotmail.com",
             "", "12345", Tipo_Documento.CEDULA_CIUDADANIA);
-    Administrador administrador;
+
 
     @FXML
     private Label IngresarLabel ;
@@ -50,7 +50,7 @@ public class LoginController  {
     private void initialize() {
 
         IngresarLabel.setOnMouseClicked(event -> handleIngresarClick(event));
-        RegistrarLabel.setOnMouseClicked(event ->  handleRegistrarClick());
+        RegistrarLabel.setOnMouseClicked(event ->  handleRegistrarClick(event));
     }
     @FXML
     private void handleIngresarClick(MouseEvent event){
@@ -58,9 +58,12 @@ public class LoginController  {
             mostrarMensaje("No deje campos vacíos", "Error", Alert.AlertType.ERROR);
         } else {
             empleado = empleadoRepo.findByCorreoAndContrasenia(CorreoField.getText(), ContraseñaField.getText()).orElse(null);
+            System.out.println(CorreoField.getText() +" "+ ContraseñaField.getText());
+
             //VALIDAR INGRESO DE ADMIN
-            if (empleado != null && "yutu6d1@hotmail.com".equals(CorreoField.getText()) && "12345".equals(ContraseñaField.getText()) ) {
+            if (empleado != null && "yutu6d1@hotmail.com".equalsIgnoreCase(CorreoField.getText()) && "12345".equalsIgnoreCase(ContraseñaField.getText()) ) {
                 empleado = empleadoAdmin;
+                System.out.println(CorreoField.getText() +" "+ ContraseñaField.getText());
                 mostrarMensaje("Ingresando...", "CONFIRMATION", Alert.AlertType.CONFIRMATION);
                 // función para ir a las pantallas de empleado con argumento (empleado)
                 abrirVentanaInventario(event, empleado);
@@ -90,7 +93,7 @@ public class LoginController  {
         alert.showAndWait();
     }
     @FXML
-    private void  handleRegistrarClick() {
-// funcion para ir a la pantalla crear empleado
+    private void  handleRegistrarClick(MouseEvent event) {
+        sceneController.cambiarAVentanaCrearEmpleado( event);
     }
 }

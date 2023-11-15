@@ -45,7 +45,7 @@ public class InventarioController implements Initializable {
     @Autowired
     Detalle_FacturaRepo detalleFacturaRepo;
     Cliente cliente = new Cliente();
-    Empleado empleado = new Empleado();
+    //Empleado empleado = new Empleado();
 
     @FXML
     private ImageView fondoImageView;
@@ -159,7 +159,7 @@ public class InventarioController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializetable();
-empleado = empleadoRepo.findById("1").orElse(null);
+
         // Load products
         listaCarrito.addAll(carrito);
 
@@ -259,7 +259,7 @@ empleado = empleadoRepo.findById("1").orElse(null);
     private Factura GenerarFactura(Tipo_Factura tipoFactura){
         Date fechaActual = new Date();
         Double total = Double.parseDouble(totalField.getText());
-        Factura factura = new Factura(obtenerSiguienteIdFactura(),fechaActual,total,cliente,empleado,tipoFactura, detalleFacturas  );
+        Factura factura = new Factura(obtenerSiguienteIdFactura(),fechaActual,total,cliente,empleadoLogin,tipoFactura, detalleFacturas  );
         facturaRepo.save(factura);
         return  factura;
 
@@ -500,7 +500,8 @@ empleado = empleadoRepo.findById("1").orElse(null);
     }
 
     private void handleEliminarLabelClick() {
-        System.out.println("Clic en Eliminar");
+
+
     }
 
     private void handleBuscarLabelClick() {
@@ -529,7 +530,9 @@ empleado = empleadoRepo.findById("1").orElse(null);
         System.out.println("Clic en Facturas");
         abrirVentanaFacturas(event, empleadoLogin);
     }
-
+    private void abrirVentanaFactura(MouseEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaFactura(event, empleado);
+    }
 
     private void handleProveedoresLabelClick(MouseEvent event) {
         System.out.println("Clic en Proveedores");
@@ -549,7 +552,7 @@ empleado = empleadoRepo.findById("1").orElse(null);
     }
 
     private void abrirVentanaHistorial(MouseEvent event, Empleado empleado) {
-       // sceneController.(event, empleado);
+       sceneController.cambiarAVentanaFactura(event, empleado);
     }
     private void abrirVentanaProducto(MouseEvent event, Empleado empleado) {
         sceneController.cambiarAVentanaProducto(event, empleado);

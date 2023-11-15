@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -21,12 +22,13 @@ public class ClienteController implements Initializable {
     @Autowired
     ClienteRepo clienteRepo;
     ObservableList<Cliente> listaClientesObservable = FXCollections.observableArrayList();
-
+Cliente cliente;
     private Empleado empleadoLogin;
 
     @FXML
     private Label inventarioLabel;
-
+    @Autowired
+    private SceneController sceneController;
     @FXML
     private Label actualizarLabel;
 
@@ -103,8 +105,10 @@ public class ClienteController implements Initializable {
     }
 
     @FXML
-    private void handleActualizarClick() {
-        System.out.println("Clic en el label 'Actualizar'");
+    private void handleActualizarClick(MouseEvent event) {
+
+        abrirVentanaactualizarCliente(event, empleadoLogin );
+
     }
 
     @FXML
@@ -289,16 +293,36 @@ public class ClienteController implements Initializable {
 
     }
     @FXML
-    private void handleCrearClick() {
-        System.out.println("Clic en el label 'crear'");
+    private void handleCrearClick(MouseEvent event) {
+        abrirVentanaCrearCliente(event,empleadoLogin);
+
     }
+    private void abrirVentanaCrearCliente(MouseEvent event, Empleado empleado) {
+        sceneController.cambiarAVentanaCrearCliente(event,empleado);;
+    }
+    private void abrirVentanaactualizarCliente(MouseEvent event, Empleado empleado) {
+
+        if(idField.getText().isEmpty()){
+            mostrarAlerta("escriba un id porfavor", "Error", Alert.AlertType.ERROR);
+        } else {
+            cliente = clienteRepo.findById(idField.getText()).orElse(null);
+            if(cliente != null) {
+                sceneController.cambiarAVentanaActualizarCliente(event, empleado, cliente);
+            } else{
+                mostrarAlerta("ese cliente no existe", "Error", Alert.AlertType.ERROR);
+            }
+            ;
+        }
+    }
+
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         initializeTabla();
         refrescarTablaPersonas();
-        CrearLabel.setOnMouseClicked(event -> handleCrearClick());
+        CrearLabel.setOnMouseClicked(event -> handleCrearClick( event));
         inventarioLabel.setOnMouseClicked(event -> handleInventarioClick());
-        actualizarLabel.setOnMouseClicked(event -> handleActualizarClick());
+        actualizarLabel.setOnMouseClicked(event -> handleActualizarClick(event));
         historialLabel.setOnMouseClicked(event -> handleHistorialClick());
         facturasLabel.setOnMouseClicked(event -> handleFacturasClick());
         proveedoresLabel.setOnMouseClicked(event -> handleProveedoresClick());
